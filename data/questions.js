@@ -1,0 +1,2012 @@
+/* 由 tools/build-data.js 自动生成，请勿手改。来源：content/questions.json */
+window.QUESTIONS = {
+ "scale": {
+  "likert_labels": [
+   "完全不像我",
+   "不太像我",
+   "说不准",
+   "比较像我",
+   "非常像我"
+  ],
+  "likert_values": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "note": "reverse 为 true 的题按 6 减原始分计分；weights 为各维度的权重，情境题每个选项的 weights 即选中后计入的分数，空对象表示中性选项。"
+ },
+ "sections": [
+  {
+   "id": "normal",
+   "title": "平时的我",
+   "intro": "请按你平时真实的样子作答，而不是你希望成为的样子。没有对错之分，凭第一感觉选就好。"
+  },
+  {
+   "id": "stress",
+   "title": "压力下的我",
+   "intro": "请回想自己压力很大、被冒犯或吃了亏的时候，选出最接近你当时真实反应的一项。如果没有完全符合的，就选最接近的那个。"
+  }
+ ],
+ "questions": [
+  {
+   "id": "H01",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "听到别人夸我，我会很开心，而且多半当真。",
+   "reverse": false,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "聞人稱譽歡喜信之"
+   },
+   "rationale": "贪婬相“聞人稱譽歡喜信之”，偈作“自喜易詐信人語”：听到称赞就欢喜，并信以为真；瞋恚相则“普懷狐疑不尋信之”，正好相反。",
+   "derived": false,
+   "draft_id": "tan_L01"
+  },
+  {
+   "id": "V01",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "我常真切地感到：身边的人和事，连同我自己的身体和心情，每天都在变。",
+   "reverse": false,
+   "weights": {
+    "v_xin": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "見知萬物皆歸無常"
+   },
+   "rationale": "经文定义信为“見知萬物皆歸無常”：不是相信某个说法，而是亲眼看清万物都在变化；题目问这种看清是否真切、常在。",
+   "derived": false,
+   "draft_id": "vir_xin_L01"
+  },
+  {
+   "id": "H02",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "看别人的方案或作品，我第一眼注意到的往往是毛病。",
+   "reverse": false,
+   "weights": {
+    "h_chen": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "喜求他短"
+   },
+   "rationale": "瞋恚相“喜求他短”，偈作“普疑於人求長短”：喜欢找别人的短处。",
+   "derived": false,
+   "draft_id": "hc02"
+  },
+  {
+   "id": "M01",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "likert",
+   "text": "跟人说话时，我习惯顺着对方的意思说，很少当面反驳。",
+   "reverse": false,
+   "weights": {
+    "m_rou": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "語言柔軟順從不違"
+   },
+   "rationale": "口柔的核心描述“語言柔軟順從不違”：说话柔和，顺着人说，不当面违逆。",
+   "derived": false,
+   "draft_id": "ms_L01"
+  },
+  {
+   "id": "H03",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "连点什么菜、周末去哪这样的小事，我也常常拿不定主意。",
+   "reverse": false,
+   "weights": {
+    "h_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "作事猶豫"
+   },
+   "rationale": "愚癡相“寡見自大作事猶豫”：做事犹疑不决；贪婬相则“舉動所為不顧前後”，偏于草率。（原稿为反向题，改为正向表述。）",
+   "derived": false,
+   "draft_id": "chi_L02"
+  },
+  {
+   "id": "V02",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "过去一年里，我给自己定下的长期功课（比如每天静坐、读经或锻炼），就算在生病或特别忙乱的日子里，也基本没断过。",
+   "reverse": false,
+   "weights": {
+    "v_jin": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "令我身死終不捨行"
+   },
+   "rationale": "经文说精进是“專精空無，心不捨離”，哪怕野火烧到头上，也要发愿“正使燋燃骨肉皮肌，令我身死終不捨行”：再大的困境也不放下修行。（审稿：原句“就算生病、忙乱也不会停下”是对自我的理想化表态，社会赞许性高；改为回顾过去一年的实际行为，以减少“应该如此”的作答。）",
+   "derived": false,
+   "draft_id": "vir_jin_L01"
+  },
+  {
+   "id": "H04",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "我很容易笑，也很容易哭。",
+   "reverse": false,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "常歡喜笑又喜啼"
+   },
+   "rationale": "贪婬相“常喜含笑”“多言喜啼”，偈作“常歡喜笑又喜啼”：情绪外露，易笑也易哭。",
+   "derived": false,
+   "draft_id": "new"
+  },
+  {
+   "id": "H05",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "为了做成一件事，要我长期吃苦受累，我往往撑不了多久就想撂下。",
+   "reverse": true,
+   "weights": {
+    "h_chen": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "能忍勤苦"
+   },
+   "rationale": "反向题：瞋恚相偈“能忍勤苦叵觸近”，能长期忍受辛苦劳作；贪婬相则“不耐勤苦”，偈作“志卒不耐苦”。越认同此题，瞋分越低。愚痴相虽也“常遭勤苦強忍塵勞”，但那是被动硬忍（另见 H41），故此题不计入痴。（审稿改为反向表述，以平衡反向题比例。）（审稿：加“为了做成一件事”，把题意限定在为目标主动吃苦，即瞋相“能忍勤苦”“勤力精進修大事”，与愚痴被动“強忍塵勞”区分开。）",
+   "derived": false,
+   "draft_id": "hc04"
+  },
+  {
+   "id": "V03",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "我通常能察觉自己此刻的念头，是出于善意还是私心。",
+   "reverse": false,
+   "weights": {
+    "v_hui": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "分別己心所有善惡，譬如良醫知腹中病"
+   },
+   "rationale": "经文定义智慧，其中一项是“分別己心所有善惡，譬如良醫知腹中病”：像好医生看清病根一样，看清自己心里的善恶念头。",
+   "derived": false,
+   "draft_id": "vir_hui_L01"
+  },
+  {
+   "id": "H06",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "choice",
+   "text": "难得有一个完全空闲的周末，我最可能怎么过？",
+   "options": [
+    {
+     "text": "约朋友出门逛逛、看展、探店，排得满满的才过瘾。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "睡到自然醒，窝在家里吃吃喝喝，不知不觉一天就过去了。",
+     "weights": {
+      "h_chi": 2
+     }
+    },
+    {
+     "text": "给自己定个硬目标，把拖着的大项目推进一大截。",
+     "weights": {
+      "h_chen": 2
+     }
+    },
+    {
+     "text": "收拾收拾家，陪陪家人。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "常喜出城行遊觀"
+   },
+   "rationale": "贪：“數行遊觀”“常喜出城行遊觀”“多有朋友”；瞋：“勤力精進修大事”“能忍勤苦”“少於睡眠”；痴：“多憂嗜臥多食無節”“愛樂冥處”；家务陪家人为中性项非经文所出。",
+   "derived": false,
+   "draft_id": "tan_C04"
+  },
+  {
+   "id": "H07",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "我做什么都喜欢有人作伴，很少一个人吃饭、一个人出门办事。",
+   "reverse": true,
+   "weights": {
+    "h_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "常喜獨行"
+   },
+   "rationale": "反向题：愚癡相“憎於善人常喜獨行”，偈作“獨行然無信”：喜欢独来独往。越喜欢结伴，痴分越低。此项本身不含明显褒贬，可降低社会赞许性的影响。（审稿改为反向表述。）",
+   "derived": false,
+   "draft_id": "chi_L08"
+  },
+  {
+   "id": "V04",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "别人指出我的缺点时，只要说得对，我会直接承认，不急着找理由。",
+   "reverse": false,
+   "weights": {
+    "v_zhi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "謂不諛諂，其心質直"
+   },
+   "rationale": "经文定义无谄为“不諛諂，其心質直”：心直不绕弯。被指出过失时直接承认、不找补，就是质直在日常里的表现。（以承认缺点说明质直，依经文通则推出。）",
+   "derived": true,
+   "draft_id": "vir_zhi_L01"
+  },
+  {
+   "id": "H08",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "看到喜欢的东西或好玩的事，我一般会先冷静想想再决定，不会说做就做。",
+   "reverse": true,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "卒暴輕舉如獼猴"
+   },
+   "rationale": "反向题：贪婬相“無有遠慮，舉動所為不顧前後”，偈作“卒暴輕舉如獼猴”“輕事不顧後”；越能在喜欢的事物面前先停一停，贪分越低。（审稿：原句“做决定前先把后果想清楚”泛指考虑后果，愚痴相“不了吉凶”同样适用，且赞许性高；改为由喜好触发的冲动，贴合贪相。）",
+   "derived": false,
+   "draft_id": "tan_L10"
+  },
+  {
+   "id": "M02",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "likert",
+   "text": "我说话比较冲，有时一句话出口，对方脸色就变了。",
+   "reverse": false,
+   "weights": {
+    "m_cu": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "語言剛急中傷於人"
+   },
+   "rationale": "口粗的核心描述“語言剛急中傷於人”：言辞刚硬急躁，容易伤到人。",
+   "derived": false,
+   "draft_id": "ms_L04"
+  },
+  {
+   "id": "H09",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "真正伤过我的人，就算后来道了歉，我也很难再跟他亲近。",
+   "reverse": false,
+   "weights": {
+    "h_chen": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "仇讎難和所受不忘"
+   },
+   "rationale": "瞋恚相“多有怨憎……仇讎難和所受不忘”：结下的怨难以和解，受过的伤一直记得。",
+   "derived": false,
+   "draft_id": "hc01"
+  },
+  {
+   "id": "V05",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "认定一件重要的事以后，周围再热闹、再有诱惑，我也能把心放在这件事上。",
+   "reverse": false,
+   "weights": {
+    "v_yi": 1
+   },
+   "source": {
+    "pin": "勸意品",
+    "quote": "若見是非而不轉移，唯念油鉢志不在餘"
+   },
+   "rationale": "持油钵的人一路上遇到围观、美女、醉象、失火，都“若見是非而不轉移，唯念油鉢志不在餘”，偈称“其人擎鉢心堅強”，这就是有志。",
+   "derived": false,
+   "draft_id": "vir_yi_L01"
+  },
+  {
+   "id": "H10",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "吃东西时，我对味道很敏感，菜里咸了一点、淡了一点都尝得出来。",
+   "reverse": true,
+   "weights": {
+    "h_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "有所食噉不別五味"
+   },
+   "rationale": "反向题：愚癡相“有所食噉不別五味”，偈作“不別知五味”：吃东西分辨不出滋味。越能尝出细微差别，痴分越低。贪、瞋二相都没有关于味觉的描述，因此区分度较好，也没有明显的“好答案”。（审稿替换原题“看到陌生人的不幸……”：原题依据“無有慈哀”，但瞋恚相同样“無有哀心”，一题同时对应瞋与痴，且同情心题社会赞许性过高。）",
+   "derived": false,
+   "draft_id": "chi_L01"
+  },
+  {
+   "id": "H11",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "朋友开口借钱或请我帮忙，我很难拒绝，常常答应得比自己能承受的还多。",
+   "reverse": false,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "於諸親友放捨施與"
+   },
+   "rationale": "贪婬相“於諸親友放捨施與，所有多少不與人爭，所惠廣大”，又“易詐易伏”：对亲友出手大方、不计多少，也容易被人说动。（审稿：原句“出钱出力都很爽快”是明显的好答案；改为带代价的表述以降低社会赞许性。“答应得比自己能承受的还多”为依经文通则推出，经文未直说。）",
+   "derived": true,
+   "draft_id": "tan_L05"
+  },
+  {
+   "id": "V06",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "我不指望哪个地方、哪个人或哪种成就，能让我从此永远安稳无忧。",
+   "reverse": false,
+   "weights": {
+    "v_xin": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "所可受身悉為憂苦，三界悉空"
+   },
+   "rationale": "信的第二、三层：“所可受身悉為憂苦，三界悉空”。有身就有苦，世间没有一处可以永远依靠；不把安稳寄托在外物上，就是看清了这一点。",
+   "derived": false,
+   "draft_id": "vir_xin_L02"
+  },
+  {
+   "id": "H12",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "我生气来得快、去得也快，很少气到第二天。",
+   "reverse": true,
+   "weights": {
+    "h_chen": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "不卒懟恨，若怒難解"
+   },
+   "rationale": "反向题：瞋恚相“解於深義不卒懟恨，若怒難解”，偈作“無所畏錄不卒瞋”：不会马上发作，但一怒就难以化解；“来得快、去得快”正好相反，越符合，瞋分越低。",
+   "derived": false,
+   "draft_id": "new"
+  },
+  {
+   "id": "H13",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "就算没什么事，我也常不自觉地叹气。",
+   "reverse": false,
+   "weights": {
+    "h_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "數自歎息"
+   },
+   "rationale": "愚癡相“數自歎息”，又说“多憂”，偈作“燋焠數歎息”“常憂多狐疑”：无端常叹气，心中郁闷。",
+   "derived": false,
+   "draft_id": "chi_L07"
+  },
+  {
+   "id": "M03",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "likert",
+   "text": "别人跟我聊了半天，我常常没抓住他真正想说什么。",
+   "reverse": false,
+   "weights": {
+    "m_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "人與共語都無所解"
+   },
+   "rationale": "口痴“無所別知，人與共語都無所解”：与人交谈时抓不住对方的意思。",
+   "derived": false,
+   "draft_id": "ms_L07"
+  },
+  {
+   "id": "V07",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "我明白老毛病不是下一次决心就能去掉的，所以愿意长期一点一点下功夫。",
+   "reverse": false,
+   "weights": {
+    "v_jin": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "此婬、怒、癡不可輕滅，譬如以糠欲消銅鐵，終不能也"
+   },
+   "rationale": "精进段说“此婬、怒、癡不可輕滅，譬如以糠欲消銅鐵”，所以要“執心堅強一切方便”。知道烦恼难除、甘愿长期用功，是精进的心态。",
+   "derived": false,
+   "draft_id": "vir_jin_L02"
+  },
+  {
+   "id": "H14",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "choice",
+   "text": "收到一个好消息（升职、加薪，或被心仪的学校录取），消息刚到的那一刻，我更接近哪种状态？",
+   "options": [
+    {
+     "text": "特别开心，第一时间想告诉身边的人。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "高兴一阵子，然后该干嘛干嘛。",
+     "weights": {}
+    },
+    {
+     "text": "说不上多高兴，反倒先冒出一堆担心。",
+     "weights": {
+      "h_chi": 2
+     }
+    },
+    {
+     "text": "挺平静，很快开始琢磨下一个更大的目标。",
+     "weights": {
+      "h_chen": 2
+     }
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "當憂反喜、當喜反憂"
+   },
+   "rationale": "痴：“當憂反喜、當喜反憂”，偈作“應喜而反憂”，又说“多憂”；贪：“得小利入大用歡喜”“常喜含笑”；瞋：取“勤力精進修大事”（瞋恚相面对好消息的反应经文未直说，此项对应依经文通则推出）；“该干嘛干嘛”为中性项非经文所出。",
+   "derived": true,
+   "draft_id": "chi_C02"
+  },
+  {
+   "id": "H15",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "我容易一下子迷上一样东西；可一听说它的缺点，热情很快就退了。",
+   "reverse": false,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "說其惡露尋復厭之，易進易退"
+   },
+   "rationale": "贪婬相“聞色欲事即貪著之，說其惡露尋復厭之，易進易退”：一听就被吸引，一听说它的不好又很快厌弃；瞋恚相则“難進難退”。经文原指色欲之事，题目放宽为一般喜好之物，属依经文通则推出。",
+   "derived": true,
+   "draft_id": "tan_L07"
+  },
+  {
+   "id": "V08",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "我大致知道什么时候该静下来，什么时候该反省，什么时候该去学习。",
+   "reverse": false,
+   "weights": {
+    "v_hui": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "曉了寂定時，知當觀時，知察慧時，知受法時"
+   },
+   "rationale": "智慧的首要内容是知时：“曉了寂定時，知當觀時，知察慧時，知受法時”。何时该静、何时该观察、何时该受教，各有其时。",
+   "derived": false,
+   "draft_id": "vir_hui_L02"
+  },
+  {
+   "id": "H16",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "我学东西上手慢，但一旦学会就很难忘。",
+   "reverse": false,
+   "weights": {
+    "h_chen": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "所可聽受遲鈍難得，既受得之亦復難忘"
+   },
+   "rationale": "瞋恚相“所可聽受遲鈍難得，既受得之亦復難忘”，偈作“性曚難學亦難忘”：学得慢而记得牢；贪婬相恰好相反，“諸所造學即能得，雖疾知之速忘失”。（原稿中贪、瞋两个镜像题合并为此一题。）",
+   "derived": false,
+   "draft_id": "hc05"
+  },
+  {
+   "id": "H17",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "别人越催我做一件事，我越不想动；没人提了，我倒会自己去做。",
+   "reverse": false,
+   "weights": {
+    "h_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "人倩使之而不肯作、不倩不使而更自為"
+   },
+   "rationale": "愚癡相“人倩使之而不肯作、不倩不使而更自為”，偈作“所倩使不肯，不使而反行”：叫他做偏不做，不叫反倒自己去做。",
+   "derived": false,
+   "draft_id": "chi_L04"
+  },
+  {
+   "id": "V09",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "向能帮我的人（老师、长辈、医生）求助时，我会把真实的问题和难以启齿的过失都讲出来。",
+   "reverse": false,
+   "weights": {
+    "v_zhi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "悉向法師說其瑕疹。譬如病者而有疾苦，悉當為醫至誠說之"
+   },
+   "rationale": "质直的核心是“諸所塵勞不可之事，悉向法師說其瑕疹”，像病人对医生“至誠說之”：自己的毛病全部如实说出，老师才能“應所乏短為其說法”。",
+   "derived": false,
+   "draft_id": "vir_zhi_L02"
+  },
+  {
+   "id": "H18",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "遇到熟人时，我多半等对方先开口打招呼。",
+   "reverse": true,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "見人先問"
+   },
+   "rationale": "反向题：贪婬相“見人先問”，偈作“見人先問訊”：见了人主动问候。越常等别人先开口，贪分越低。（审稿改为反向表述。）",
+   "derived": false,
+   "draft_id": "new"
+  },
+  {
+   "id": "M04",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "choice",
+   "text": "朋友问我“这身衣服怎么样”，我心里觉得很一般。我多半会怎么说？",
+   "options": [
+    {
+     "text": "“说实话不怎么样，显老，换一件吧。”",
+     "weights": {
+      "m_cu": 2
+     }
+    },
+    {
+     "text": "“挺好看的呀，很衬你。”",
+     "weights": {
+      "m_rou": 2
+     }
+    },
+    {
+     "text": "“啊？还……还行吧，我也说不好。”",
+     "weights": {
+      "m_chi": 2
+     }
+    },
+    {
+     "text": "问他在哪儿买的，把话题岔开。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "其語常柔和，順從言可人"
+   },
+   "rationale": "柔：偈“其語常柔和，順從言可人”；粗：“語言剛急”；痴：“所言不了了”；岔开话题为中性项非经文所出。",
+   "derived": false,
+   "draft_id": "ms_C05"
+  },
+  {
+   "id": "H19",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "我需要的睡眠比身边大多数人少。",
+   "reverse": false,
+   "weights": {
+    "h_chen": 0.5
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "多寤少寐"
+   },
+   "rationale": "生活习惯题（权重减半）：瞋恚相“多寤少寐”，偈作“少於睡眠”；愚癡相则“多憂嗜臥”，正好相对。（原稿痴型嗜卧一题与此题互为镜像，已合并。）",
+   "derived": false,
+   "draft_id": "hc12"
+  },
+  {
+   "id": "H20",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "在严肃或令人难过的场合，我有时会莫名其妙地想笑。",
+   "reverse": false,
+   "weights": {
+    "h_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "應哭而笑、應笑而哭"
+   },
+   "rationale": "愚癡相“應哭而笑、應笑而哭”，偈作“當哭而反笑，當笑而反哭”：情绪反应与场合不合。贪婬相的“常歡喜笑又喜啼”是笑哭都多，但合乎场合，故此题只计痴。（审稿替换原题“别人特意叮嘱的要紧事常转头就忘”：贪婬相同样“多忘誤”“志性多忘”“雖疾知之速忘失”，健忘不能区分贪与痴；且“喜忘重語”也可读作“喜忘、重語”（健忘、话说重复），原题的解读不确定。）",
+   "derived": false,
+   "draft_id": "new"
+  },
+  {
+   "id": "V10",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "遇到可怕的局面，比如突发危险或激烈的指责，我仍能照原定的方向一步步做下去。",
+   "reverse": false,
+   "weights": {
+    "v_yi": 1
+   },
+   "source": {
+    "pin": "勸意品",
+    "quote": "雖遭善惡及諸恐難，志不轉移"
+   },
+   "rationale": "经文总结持油钵的人“其心堅固，雖遭善惡及諸恐難，志不轉移”：不论顺逆、遇到什么惊险，心志都不改。",
+   "derived": false,
+   "draft_id": "vir_yi_L02"
+  },
+  {
+   "id": "H21",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "出门前，我会花不少心思在穿着打扮上。",
+   "reverse": false,
+   "weights": {
+    "h_tan": 0.5
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "喜淨潔衣好著文飾"
+   },
+   "rationale": "生活习惯题（权重减半）：贪婬相“文飾自喜”“喜淨潔衣好著文飾，莊嚴其身”，偈作“花飾莊嚴其衣服”；愚癡相则“被服弊衣身體多垢，性不自喜”，正好相对。",
+   "derived": false,
+   "draft_id": "tan_L08"
+  },
+  {
+   "id": "V11",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "遇到得失和褒贬，我很容易当成对“我这个人”的肯定或否定，放不下。",
+   "reverse": true,
+   "weights": {
+    "v_xin": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "設有吾我想，則為顛倒人"
+   },
+   "rationale": "反向题：信的第四层是“一切諸法計皆無我”，偈颂说“設有吾我想，則為顛倒人”。把得失褒贬紧紧系在“我”上，正是执有吾我；越符合，信分越低。（以日常表现说明“吾我想”，依经文通则推出。）",
+   "derived": true,
+   "draft_id": "vir_xin_L03"
+  },
+  {
+   "id": "H22",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "choice",
+   "text": "团队里新来一位同事，能力强、人缘好，大家都很喜欢他。我心里的真实感受更接近哪一种？",
+   "options": [
+    {
+     "text": "先不急着下结论，看看他是真有本事，还是只会做人。",
+     "weights": {
+      "h_chen": 2
+     }
+    },
+    {
+     "text": "说不上为什么，就是不太想往他跟前凑。",
+     "weights": {
+      "h_chi": 2
+     }
+    },
+    {
+     "text": "挺好的，主动去打招呼、约个饭。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "没什么特别感觉，工作上该配合就配合。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "憎於善人"
+   },
+   "rationale": "痴：“憎於善人常喜獨行”，偈作“嫉賢及懈息”：对优秀的人莫名排斥，宁可独处；贪：“見人先問”“若見好人敬而重之”“多有朋友”；瞋：“普懷狐疑不尋信之，喜求他短”；“没什么特别感觉”为中性项非经文所出。",
+   "derived": false,
+   "draft_id": "chi_C03"
+  },
+  {
+   "id": "H23",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "别人热情推荐的说法或机会，我的第一反应通常是怀疑。",
+   "reverse": false,
+   "weights": {
+    "h_chen": 1,
+    "h_chi": 0.2
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "普懷狐疑不尋信之"
+   },
+   "rationale": "瞋恚相“普懷狐疑不尋信之”：对人普遍存疑，不轻易相信；愚癡相偈亦有“常憂多狐疑”，故附 h_chi 0.2 的次要权重（权重设置依经文通则推出）。",
+   "derived": true,
+   "draft_id": "hc03"
+  },
+  {
+   "id": "M05",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "likert",
+   "text": "常有人说我：道理没错，就是话太难听。",
+   "reverse": false,
+   "weights": {
+    "m_cu": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "所言至誠惡口麁󰉕"
+   },
+   "rationale": "瞋恚相有“所言至誠惡口麁󰉕”：说的是实话，出口却粗硬。此题只测说法粗不粗，不测心里有没有火气。",
+   "derived": false,
+   "draft_id": "ms_L05"
+  },
+  {
+   "id": "H24",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "谁是真心为我好、谁只是客气，我一般分得清。",
+   "reverse": true,
+   "weights": {
+    "h_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "不別善友及與怨家"
+   },
+   "rationale": "反向题：愚癡相“不別善友及與怨家”，偈作“不別反怨讎”：分不清真心的朋友与对自己不利的人。越分得清，痴分越低。",
+   "derived": false,
+   "draft_id": "chi_L05"
+  },
+  {
+   "id": "V12",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "碰到很难懂、一时看不到进展的东西，我常觉得“太深了，不适合我”，就不再往下钻。",
+   "reverse": true,
+   "weights": {
+    "v_jin": 1
+   },
+   "source": {
+    "pin": "離顛倒品",
+    "quote": "修行道者或懷懈怠，謂法微妙難曉難了"
+   },
+   "rationale": "反向题：经文明说懈怠的表现是“謂法微妙難曉難了”，嫌法太深就退缩；对治则是“勤力勸樂而無退”。越符合，精进分越低。",
+   "derived": false,
+   "draft_id": "vir_jin_L04"
+  },
+  {
+   "id": "H25",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "抢到折扣、收到小红包这类小好处，我其实没多大感觉。",
+   "reverse": true,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "得小利入大用歡喜"
+   },
+   "rationale": "反向题：贪婬相“得小利入大用歡喜”，偈作“得利大喜失甚憂”：得到一点小利就十分欢喜。越不在意小好处，贪分越低。（“失甚憂”一面放在压力情境题 S05 中考察。审稿改为反向表述。）",
+   "derived": false,
+   "draft_id": "tan_L02"
+  },
+  {
+   "id": "M09",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "likert",
+   "text": "就算心里不痛快，我说出口的话一般也不带刺，不会让人下不来台。",
+   "reverse": true,
+   "weights": {
+    "m_cu": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "言常剛急惡加於人"
+   },
+   "rationale": "反向题：口麁者“言常剛急惡加於人”“語言剛急中傷於人”：话说出口就伤人。越认同此题，口粗分越低。（审稿新增：原稿 m_cu 无反向题。）",
+   "derived": false,
+   "draft_id": "review_M09"
+  },
+  {
+   "id": "H26",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "事情做完以后，我常回过头琢磨，后悔当初没换个做法。",
+   "reverse": true,
+   "weights": {
+    "h_chen": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "所可作為不追悔"
+   },
+   "rationale": "反向题：瞋恚相偈“所可作為不追悔”：做过的事不追悔。越常事后后悔，瞋分越低。贪婬相偈的“不可便踈尋即悔”说的是疏远亲友后很快后悔，对象不同，故不计入贪。（审稿改为反向表述。）",
+   "derived": false,
+   "draft_id": "new"
+  },
+  {
+   "id": "V13",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "我常常要等事情过去很久，才明白当时自己为什么那么激动。",
+   "reverse": true,
+   "weights": {
+    "v_hui": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "知心因緣，諸想所奉"
+   },
+   "rationale": "反向题：智慧者“知心因緣，諸想所奉”，当下就知道心为什么起、被哪些念头牵着走。事后很久才明白，说明当下看不清；越符合，智慧分越低。",
+   "derived": false,
+   "draft_id": "vir_hui_L03"
+  },
+  {
+   "id": "H27",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "比起明亮热闹的地方，我更喜欢待在光线暗一点的屋里，比如拉上窗帘窝着。",
+   "reverse": false,
+   "weights": {
+    "h_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "愛樂冥處"
+   },
+   "rationale": "愚癡相“無有黠慧愛樂冥處”，偈作“無信喜居冥”：喜欢待在幽暗处。贪婬相则“數行遊觀”“常喜出城行遊觀”，喜欢热闹外出，正好相对。（审稿替换原题“身边的人常说我性子慢、脾气软”：原题依据“性柔軟”，但贪婬相同样“柔軟性至誠”“柔和多哀”，且“所作遲緩”“舒緩”，性子慢、脾气软同时对应贪与痴。）",
+   "derived": false,
+   "draft_id": "chi_L10"
+  },
+  {
+   "id": "V14",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "承认过的错，我过后常又找补几句，让它听起来没那么严重。",
+   "reverse": true,
+   "weights": {
+    "v_zhi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "敦信守誠"
+   },
+   "rationale": "反向题：经文说质直的人“專精行道，敦信守誠”，说出的实话守得住。认错之后又改口、粉饰，便是守不住诚；越符合，质直分越低。（把改口、粉饰作为反面，依经文通则推出。）",
+   "derived": true,
+   "draft_id": "vir_zhi_L03"
+  },
+  {
+   "id": "H28",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "排长队、候诊这类只能干等着的时候，我也能安安稳稳坐着，不觉得难熬。",
+   "reverse": true,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "所處臥坐不忍久"
+   },
+   "rationale": "反向题：贪婬相“臥起行步而不安詳”，偈作“所處臥坐不忍久”，又“性如獼猴”：坐卧都待不长久，耐不住无聊；越能安坐干等，贪分越低。（审稿：原句只问“能否久坐”，愚痴相“行步臥起未曾安隱”也会不同意；改为“耐不住无聊”的情境，更贴近贪相的好动。）",
+   "derived": false,
+   "draft_id": "new"
+  },
+  {
+   "id": "M06",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "likert",
+   "text": "要我说些顺耳的好听话，我会觉得别扭。",
+   "reverse": true,
+   "weights": {
+    "m_rou": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "順從言可人"
+   },
+   "rationale": "反向题：口柔者偈云“其語常柔和，順從言可人”，说顺耳话对他很自然；觉得别扭，说明口柔分低。",
+   "derived": false,
+   "draft_id": "ms_L03"
+  },
+  {
+   "id": "H29",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "和人意见不合时，我常为了气氛先让一步。",
+   "reverse": true,
+   "weights": {
+    "h_chen": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "多力反復不能下屈"
+   },
+   "rationale": "反向题：瞋恚相“多力反復不能下屈”，偈作“難屈伏”“未曾還變亦不伏”：不肯低头让步；越常先让步，瞋分越低。（原稿贪型“易教不很戾”一题与此题互为镜像，已合并。）",
+   "derived": false,
+   "draft_id": "hc11"
+  },
+  {
+   "id": "H30",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "choice",
+   "text": "一段曾经很亲近的友谊，因为一些摩擦慢慢淡了。过了一段时间，我最可能是什么状态？",
+   "options": [
+    {
+     "text": "心里闷闷的，也说不清怎么回事，一个人消沉一阵。",
+     "weights": {
+      "h_chi": 2
+     }
+    },
+    {
+     "text": "偶尔想起会有点感慨，但日子照常过，也没打算做什么。",
+     "weights": {}
+    },
+    {
+     "text": "当时觉得淡了就淡了，过些日子又后悔，常想要不要主动找对方。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "既然走到这一步就翻篇了，很少再想起。",
+     "weights": {
+      "h_chen": 2
+     }
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "於法財色及親友，不可便踈尋即悔"
+   },
+   "rationale": "贪：“於法財色及親友，不可便踈尋即悔”（疏远之后很快后悔）；瞋：“一捨所親不思之，未曾還變”；痴：“多憂”“數自歎息”“常喜獨行”；第二项为中性项，非经文所出。（审稿将中性项由“找朋友聊聊、听听看法再决定”改为平淡表述，原中性项是一眼可见的“成熟答案”。）",
+   "derived": false,
+   "draft_id": "tan_C02"
+  },
+  {
+   "id": "V15",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "我很容易被手机消息或旁人闲聊勾走，忘了自己原本要做什么。",
+   "reverse": true,
+   "weights": {
+    "v_yi": 1
+   },
+   "source": {
+    "pin": "勸意品",
+    "quote": "有志不放逸，寂滅而自制"
+   },
+   "rationale": "反向题：偈颂说“有志不放逸，寂滅而自制”，后文又以“放逸喜忘”为缺少五德的表现。容易分心、忘了原来要做的事，就是放逸；越符合，有志分越低。",
+   "derived": false,
+   "draft_id": "vir_yi_L03"
+  },
+  {
+   "id": "H31",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "我吃东西常常没有节制，不知不觉就吃多了。",
+   "reverse": false,
+   "weights": {
+    "h_chi": 0.5
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "多食無節"
+   },
+   "rationale": "生活习惯题（权重减半）：愚癡相“多憂嗜臥多食無節”，偈作“貪飲食無飽”：饮食没有节制。",
+   "derived": false,
+   "draft_id": "new"
+  },
+  {
+   "id": "H32",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "我朋友很多，但能长久来往的没几个。",
+   "reverse": false,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "多有朋友不能久親"
+   },
+   "rationale": "贪婬相“多有朋友不能久親”“結友不久”：朋友多而难以长久；瞋恚相则“結友究竟”、偈作“尠友”，正好相对。（原稿中贪、瞋两个镜像题合并为此一题。）",
+   "derived": false,
+   "draft_id": "tan_L11"
+  },
+  {
+   "id": "V16",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "道理上我知道一切都会变，可真遇到失去或变故，我会完全乱掉。",
+   "reverse": true,
+   "weights": {
+    "v_xin": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "無有能動搖，此乃謂為信"
+   },
+   "rationale": "反向题：偈颂以“無有能動搖，此乃謂為信”作为信的标准。嘴上懂无常、事到临头却完全动摇，说明还停留在道理上，没有真正认定；越符合，信分越低。",
+   "derived": false,
+   "draft_id": "vir_xin_L04"
+  },
+  {
+   "id": "H33",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "比起许多零碎小事，我更愿意把力气花在一件需要长期投入的大事上。",
+   "reverse": false,
+   "weights": {
+    "h_chen": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "勤力精進修大事"
+   },
+   "rationale": "瞋恚相偈“勤力精進修大事”：肯下大力气成办大事，且“難進難退”，不轻易开始也不轻易放下。",
+   "derived": false,
+   "draft_id": "hc06"
+  },
+  {
+   "id": "M10",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "likert",
+   "text": "聊天时别人讲个笑话、打个比方，我很快就能听懂其中的意思。",
+   "reverse": true,
+   "weights": {
+    "m_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "不曉善惡義所歸趣"
+   },
+   "rationale": "反向题：口痴者“無所別知，人與共語都無所解，不曉善惡義所歸趣”：听不懂别人话里的意思。越能很快领会，口痴分越低。以笑话、比方为例是依经文通则推出的日常化表述。（审稿新增：原稿 m_chi 无反向题。）",
+   "derived": true,
+   "draft_id": "review_M10"
+  },
+  {
+   "id": "M07",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "likert",
+   "text": "我说的话常常不够清楚，别人得追问几次才明白。",
+   "reverse": false,
+   "weights": {
+    "m_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "口所言說不了了"
+   },
+   "rationale": "口痴心婬偈“口所言說不了了”：说出来的话不清楚、不明了。",
+   "derived": false,
+   "draft_id": "ms_L08"
+  },
+  {
+   "id": "H34",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "我常常担心错地方：该小心的事没在意，不要紧的事倒紧张半天。",
+   "reverse": false,
+   "weights": {
+    "h_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "當畏不畏、不當畏者然反畏之"
+   },
+   "rationale": "愚癡相“當畏不畏、不當畏者然反畏之”，偈作“當畏而不畏，不畏而反畏”：怕错了对象。贪婬相是“多事恐怖”（普遍易惊），瞋恚相是“人怖不懼”（普遍不怕），愚癡相的特点在于错位。",
+   "derived": false,
+   "draft_id": "chi_L06"
+  },
+  {
+   "id": "V17",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "想改掉一个老毛病时，我常想“都这么多年了，大概改不掉了”，然后就松懈下来。",
+   "reverse": true,
+   "weights": {
+    "v_jin": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "人命既短又復懈怠，安能一生除盡諸瑕乎"
+   },
+   "rationale": "反向题：经文举出修行人“習婬、怒、癡已來甚久，人命既短又復懈怠，安能一生除盡諸瑕乎”的念头，并以“欲求道義莫懈怠”劝止。这是懈怠，与精进相反；越符合，精进分越低。（此段在五德定义之前，归入精进的反面属依经文通则推出。）",
+   "derived": true,
+   "draft_id": "vir_jin_L03"
+  },
+  {
+   "id": "H35",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "我藏不住话，聊得投机时，私事也常常说出去。",
+   "reverse": false,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "伏匿之事悉為道說"
+   },
+   "rationale": "贪婬相“伏匿之事悉為道說”：隐秘的事都会说出来，藏不住话。",
+   "derived": false,
+   "draft_id": "tan_L03"
+  },
+  {
+   "id": "H36",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "刚认识我的人，常觉得我不太好接近。",
+   "reverse": false,
+   "weights": {
+    "h_chen": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "叵觸近"
+   },
+   "rationale": "瞋恚相偈“能忍勤苦叵觸近”，又说“志性剛強”：性情刚硬，旁人不易亲近。",
+   "derived": false,
+   "draft_id": "new"
+  },
+  {
+   "id": "V18",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "心里一慌，我就容易把对的看成错的、把错的看成对的。",
+   "reverse": true,
+   "weights": {
+    "v_hui": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "不了道趣心懷恐懼，以是為非，以非為是，則不成慧"
+   },
+   "rationale": "反向题：经文说离开明智的人“不了道趣心懷恐懼，以是為非，以非為是，則不成慧”：一害怕就是非颠倒。越符合，智慧分越低。",
+   "derived": false,
+   "draft_id": "vir_hui_L04"
+  },
+  {
+   "id": "H37",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "一件事做到一半，我一般清楚下一步该干什么，不会做着做着就乱成一团、搁在那里。",
+   "reverse": true,
+   "weights": {
+    "h_chi": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "作事多憒閙，不能自究竟"
+   },
+   "rationale": "反向题：愚癡相偈“作事多憒閙，不能自究竟”：做事纷乱、理不出头绪，因而做不完。越认同此题，痴分越低。（审稿：原句“有始有终”赞许性高，且贪相“易進易退”也会因兴趣消退而做不完，同时命中两毒；改为强调“乱成一团、理不清下一步”，对准痴相的“憒閙”。）",
+   "derived": false,
+   "draft_id": "new"
+  },
+  {
+   "id": "H38",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "choice",
+   "text": "亲友群里，大家在讨论一个我只懂一点点的话题（比如某种养生说法），我通常会怎么做？",
+   "options": [
+    {
+     "text": "看看就好，不太插话。",
+     "weights": {}
+    },
+    {
+     "text": "专找他们说法里站不住的地方，不对就直接指出来。",
+     "weights": {
+      "h_chen": 2
+     }
+    },
+    {
+     "text": "听得津津有味，还想把新鲜说法转给别人看。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "觉得自己大致明白，就说几句看法，而且觉得八九不离十。",
+     "weights": {
+      "h_chi": 2
+     }
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "寡見自大"
+   },
+   "rationale": "痴：“寡見自大”“喜自稱譽”，偈作“寡見而貢高”“強額而自譽”：所知不多却自信满满；贪：“美於言語亦樂聽”“見人先問”；瞋：“普疑於人求長短”“喜求他短”；“看看就好”为中性项非经文所出。",
+   "derived": false,
+   "draft_id": "chi_C04"
+  },
+  {
+   "id": "V19",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "为了讨人喜欢或少惹麻烦，我会对不同的人说不同的话。",
+   "reverse": true,
+   "weights": {
+    "v_zhi": 1
+   },
+   "source": {
+    "pin": "學地品",
+    "quote": "諂人多端無信"
+   },
+   "rationale": "反向题：《學地品》譬喻中的谄人“多端無信”，用好话讨好别人，说过的又不算数（偈云“其人無誠信，詐語便捨去”）。这正是“諛諂”的样子，与质直相反；越符合，质直分越低。（借他品譬喻作反面，依经文通则推出。）",
+   "derived": true,
+   "draft_id": "vir_zhi_L04"
+  },
+  {
+   "id": "H39",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "新东西我上手很快，可过一阵子不用，也忘得很快。",
+   "reverse": false,
+   "weights": {
+    "h_tan": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "諸所造學即能得，雖疾知之速忘失"
+   },
+   "rationale": "贪婬相偈“諸所造學即能得，雖疾知之速忘失”，长行作“多學伎術無所不通”：学得快、忘得也快；与瞋恚相“所可聽受遲鈍難得，既受得之亦復難忘”（H16）恰成对照。（审稿：原题“和长辈相处时自然放低姿态”在华人文化中几乎人人认同，天花板效应严重、区分度低，删除；换为本题。）",
+   "derived": false,
+   "draft_id": "review_tan"
+  },
+  {
+   "id": "M11",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "likert",
+   "text": "见了人我常是笑脸相迎，说的话让人听着舒服、愿意亲近。",
+   "reverse": false,
+   "weights": {
+    "m_rou": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "視人甚歡喜，相隨而可親"
+   },
+   "rationale": "口欲心怒偈“其口言柔軟……視人甚歡喜，相隨而可親”；口欲心欲“言念輒善安隱可意”：言语柔和、让人愿意亲近。此题只测口业是否柔和，不涉及内心。（审稿新增，使三种口业各有 3 道李克特题。）",
+   "derived": false,
+   "draft_id": "review_M11"
+  },
+  {
+   "id": "M08",
+   "section": "normal",
+   "domain": "mouth",
+   "context": "normal",
+   "format": "choice",
+   "text": "开会或小组讨论轮到我发言时，我一般是怎样的？",
+   "options": [
+    {
+     "text": "顺着前面的人说，附和、补充几句，尽量不唱反调。",
+     "weights": {
+      "m_rou": 2
+     }
+    },
+    {
+     "text": "看议题和我有没有关系，有关就多说，无关就少说。",
+     "weights": {}
+    },
+    {
+     "text": "心里有些想法，可一开口就零零碎碎，说完自己也觉得没讲出什么。",
+     "weights": {
+      "m_chi": 2
+     }
+    },
+    {
+     "text": "不同意就直说，三两句点出问题，不太顾虑措辞。",
+     "weights": {
+      "m_cu": 2
+     }
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "如龍興雲而不雷"
+   },
+   "rationale": "痴：偈“如龍興雲而不雷”“不柔無惡言”，有想法却发不出清楚的声音；柔：“順從不違”；粗：“語言剛急”；看议题多少发言为中性项非经文所出。",
+   "derived": false,
+   "draft_id": "ms_C02"
+  },
+  {
+   "id": "H40",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "丢了东西或损失了点钱，我一般不会反复惦记，过去就过去了。",
+   "reverse": false,
+   "weights": {
+    "h_chen": 1
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "若失法財所欲親友，永無愁顧"
+   },
+   "rationale": "瞋恚相“若失法財所欲親友，永無愁顧”，偈作“棄法財反不顧念”：失去了也不愁不顾；贪婬相则“忘失小小而甚憂慼”。",
+   "derived": false,
+   "draft_id": "hc07"
+  },
+  {
+   "id": "V20",
+   "section": "normal",
+   "domain": "virtue",
+   "context": "normal",
+   "format": "likert",
+   "text": "我的决心容易摇摆：今天下了决心，明天心情一变就改主意。",
+   "reverse": true,
+   "weights": {
+    "v_yi": 1
+   },
+   "source": {
+    "pin": "勸意品",
+    "quote": "心堅強者志能如是"
+   },
+   "rationale": "反向题：经文以“心堅強者志能如是”称赞持油钵者心志不动。决心一碰就摇，说明心不坚强；越符合，有志分越低。",
+   "derived": false,
+   "draft_id": "vir_yi_L04"
+  },
+  {
+   "id": "H41",
+   "section": "normal",
+   "domain": "heart",
+   "context": "normal",
+   "format": "likert",
+   "text": "处境不顺时，我多半只是忍着，很少想办法改变。",
+   "reverse": false,
+   "weights": {
+    "h_chi": 1,
+    "h_chen": 0.2
+   },
+   "source": {
+    "pin": "分別相品",
+    "quote": "常遭勤苦強忍塵勞"
+   },
+   "rationale": "愚癡相“常遭勤苦強忍塵勞”：常处辛苦而勉强忍受，偏于被动承受；贪婬相则“不耐勤苦”。瞋恚相亦“能忍勤苦”，故附 h_chen 0.2 的次要权重（权重设置依经文通则推出）。",
+   "derived": true,
+   "draft_id": "chi_L09"
+  },
+  {
+   "id": "S01",
+   "section": "stress",
+   "domain": "heart",
+   "context": "stress",
+   "format": "choice",
+   "text": "压力很大、事情一件接一件压过来时，我最常见的状态是哪一种？",
+   "options": [
+    {
+     "text": "忍不住跟身边的人念叨自己有多忙、多累，说着说着眼圈就红了。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "一声不吭，咬着牙一个人扛下来。",
+     "weights": {
+      "h_chen": 2
+     }
+    },
+    {
+     "text": "脑子发懵，不知道先做哪件。",
+     "weights": {
+      "h_chi": 2
+     }
+    },
+    {
+     "text": "先停下来喝口水、缓一缓，再接着做。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "若有急事不能自理"
+   },
+   "rationale": "贪：“多言喜啼”；瞋：“能忍勤苦”；痴：“若有急事不能自理”；第四项为中性项，非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。（审稿：中性项原为“出去跑步或走一走”，赞许性过高；后改为“刷会儿手机岔开”，又近于痴相的懈怠拖延；现改为短暂停顿的平淡表述。）",
+   "derived": true,
+   "draft_id": "st_H01"
+  },
+  {
+   "id": "S02",
+   "section": "stress",
+   "domain": "mouth",
+   "context": "stress",
+   "format": "choice",
+   "text": "被人当面冒犯、对方话说得很难听时，我嘴上通常怎么回应？",
+   "options": [
+    {
+     "text": "一时语塞，憋半天也说不出一句像样的话。",
+     "weights": {
+      "m_chi": 2
+     }
+    },
+    {
+     "text": "还是好声好气地说：“您先别急，咱们慢慢说。”",
+     "weights": {
+      "m_rou": 2
+     }
+    },
+    {
+     "text": "当场顶回去，话可能比他的还冲。",
+     "weights": {
+      "m_cu": 2
+     }
+    },
+    {
+     "text": "说一句“我现在不想谈这个”，然后离开。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "其口言急無親敬"
+   },
+   "rationale": "粗：“其口言急無親敬”“語言剛急中傷於人”；柔：“語言柔軟順從不違”；痴：“口所言說不了了”；离开为中性项非经文所出。此题只测嘴上的反应。经文描述的是常态性情，压力情境下的表现依经文通则推出。",
+   "derived": true,
+   "draft_id": "st_M01"
+  },
+  {
+   "id": "S03",
+   "section": "stress",
+   "domain": "heart",
+   "context": "stress",
+   "format": "choice",
+   "text": "辛苦做成的事被人轻描淡写地否定，甚至功劳被别人拿走，之后几天我多半会怎样？",
+   "options": [
+    {
+     "text": "当时不一定发作，但这件事我会记很久。",
+     "weights": {
+      "h_chen": 2
+     }
+    },
+    {
+     "text": "很难过，可只要有人安慰几句、夸我几句，心情很快就缓过来。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "去问问其他同事怎么看这件事。",
+     "weights": {}
+    },
+    {
+     "text": "有点懵，拿不准是自己真做得不好，还是对方有意为之，就先搁着。",
+     "weights": {
+      "h_chi": 2
+     }
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "多言喜啼易詐易伏，安隱易解"
+   },
+   "rationale": "贪：“多言喜啼易詐易伏，安隱易解”“聞人稱譽歡喜信之”；瞋：“無所畏錄不卒瞋”“仇讎難和所受不忘”；痴：“不別善友及與怨家”；问同事为中性项非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。",
+   "derived": true,
+   "draft_id": "st_H02"
+  },
+  {
+   "id": "S04",
+   "section": "stress",
+   "domain": "mouth",
+   "context": "stress",
+   "format": "choice",
+   "text": "压力很大、手上事情排满时，有人来问我一件不急的事，我回他时通常是怎样的？",
+   "options": [
+    {
+     "text": "还是耐着性子，语气柔和地回答他。",
+     "weights": {
+      "m_rou": 2
+     }
+    },
+    {
+     "text": "心不在焉，回得含含糊糊，其实没太听进他问了什么。",
+     "weights": {
+      "m_chi": 2
+     }
+    },
+    {
+     "text": "请他发消息给我，我回头再看。",
+     "weights": {}
+    },
+    {
+     "text": "语气一下就变硬了：“等会儿再说！”",
+     "weights": {
+      "m_cu": 2
+     }
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "所言不了了"
+   },
+   "rationale": "痴：“所言不了了”“人與共語都無所解”；柔：“言念輒善安隱可意”；粗：“語言剛急”；改用消息为中性项非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。",
+   "derived": true,
+   "draft_id": "st_M02"
+  },
+  {
+   "id": "S05",
+   "section": "stress",
+   "domain": "heart",
+   "context": "stress",
+   "format": "choice",
+   "text": "吃了亏的时候，比如借给朋友的钱一直要不回来，我通常会怎样？",
+   "options": [
+    {
+     "text": "心疼好几天，越想越不甘心。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "钱就当丢了，不再惦记；但这个人，我从此不再来往。",
+     "weights": {
+      "h_chen": 2
+     }
+    },
+    {
+     "text": "叹几口气，想追究又懒得动，就这么一直拖着。",
+     "weights": {
+      "h_chi": 2
+     }
+    },
+    {
+     "text": "先上网查查别人碰到这种事是怎么处理的。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "忘失小小而甚憂慼"
+   },
+   "rationale": "贪：“得小利入大用歡喜，忘失小小而甚憂慼”；瞋：“若失法財所欲親友，永無愁顧”“一捨所親不思之”；痴：“數自歎息懈惰無信”；上网查为中性项非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。",
+   "derived": true,
+   "draft_id": "st_H03"
+  },
+  {
+   "id": "S06",
+   "section": "stress",
+   "domain": "mouth",
+   "context": "stress",
+   "format": "choice",
+   "text": "时间很赶，我得马上向别人交代一件复杂的事（比如工作交接），这时我说出来的话通常是怎样的？",
+   "options": [
+    {
+     "text": "又急又冲，对方多问一句我就不耐烦。",
+     "weights": {
+      "m_cu": 2
+     }
+    },
+    {
+     "text": "再急也好声好气，一句句慢慢说。",
+     "weights": {
+      "m_rou": 2
+     }
+    },
+    {
+     "text": "说得颠三倒四，对方听完还是没明白。",
+     "weights": {
+      "m_chi": 2
+     }
+    },
+    {
+     "text": "干脆写成几条文字发给对方。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "口所言說不了了"
+   },
+   "rationale": "痴：“口所言說不了了”；粗：“語言剛急中傷於人”；柔：“語言柔軟順從不違”；改用文字为中性项非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。",
+   "derived": true,
+   "draft_id": "st_M03"
+  },
+  {
+   "id": "S07",
+   "section": "stress",
+   "domain": "heart",
+   "context": "stress",
+   "format": "choice",
+   "text": "被亲近的人误解，对方又不太肯听我解释时，我会怎样？",
+   "options": [
+    {
+     "text": "很委屈，一遍遍找机会解释；对方一松口，我马上就和好。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "先把手头的事做完，过几天再看情况。",
+     "weights": {}
+    },
+    {
+     "text": "不知道该怎么办，就躲着对方，一个人闷着。",
+     "weights": {
+      "h_chi": 2
+     }
+    },
+    {
+     "text": "解释一次不听，就不再解释；我不会先低头。",
+     "weights": {
+      "h_chen": 2
+     }
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "未曾還變亦不伏"
+   },
+   "rationale": "贪：“不可便踈尋即悔”“易進易退”；瞋：“多力反復不能下屈”“未曾還變亦不伏”；痴：“常喜獨行”“又不受諫”；先做手头事为中性项非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。",
+   "derived": true,
+   "draft_id": "st_H04"
+  },
+  {
+   "id": "S08",
+   "section": "stress",
+   "domain": "mouth",
+   "context": "stress",
+   "format": "choice",
+   "text": "需要找人交涉、讨个说法时（比如找商家退款、找房东修东西），我开口时通常是怎样的？",
+   "options": [
+    {
+     "text": "客客气气，好话说尽，提要求时还有点不好意思。",
+     "weights": {
+      "m_rou": 2
+     }
+    },
+    {
+     "text": "按流程写邮件或填单子，尽量不打电话、不见面。",
+     "weights": {}
+    },
+    {
+     "text": "一开口就很硬，摆出“今天不解决就没完”的架势。",
+     "weights": {
+      "m_cu": 2
+     }
+    },
+    {
+     "text": "说着说着就被对方绕进去了，最后不了了之。",
+     "weights": {
+      "m_chi": 2
+     }
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "無所別知"
+   },
+   "rationale": "痴：“無所別知，人與共語都無所解”；柔：“順從不違”；粗：“語言剛急”；走书面流程为中性项非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。",
+   "derived": true,
+   "draft_id": "st_M04"
+  },
+  {
+   "id": "S09",
+   "section": "stress",
+   "domain": "heart",
+   "context": "stress",
+   "format": "choice",
+   "text": "事情突然出了状况，需要我马上拿主意时（比如航班取消、计划全被打乱），我会怎样？",
+   "options": [
+    {
+     "text": "一下子慌了，想到哪做到哪，事后才发现顾此失彼。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "不慌，直接拍板，旁人有不同意见也不太听。",
+     "weights": {
+      "h_chen": 2
+     }
+    },
+    {
+     "text": "明知道得赶紧动起来，人却像被定住了，迟迟动不了。",
+     "weights": {
+      "h_chi": 2
+     }
+    },
+    {
+     "text": "先打电话问问有经验的朋友。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "舉動所為不顧前後"
+   },
+   "rationale": "贪：“舉動所為不顧前後”“志惑怱怱而驚恐”；瞋：“人怖不懼”“身口相應難諫曉”；痴：“設有急事使之不行”，偈作“諸急事難進”；问朋友为中性项非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。",
+   "derived": true,
+   "draft_id": "st_H05"
+  },
+  {
+   "id": "S10",
+   "section": "stress",
+   "domain": "mouth",
+   "context": "stress",
+   "format": "choice",
+   "text": "为家人或亲近的朋友着急上火（比如他乱花钱、不顾身体），去劝他时，我通常是怎样的？",
+   "options": [
+    {
+     "text": "想劝，却不知从哪说起；他没当回事，我也就没再说下去。",
+     "weights": {
+      "m_chi": 2
+     }
+    },
+    {
+     "text": "话说得很重，像在骂人，事后自己也觉得说过头了。",
+     "weights": {
+      "m_cu": 2
+     }
+    },
+    {
+     "text": "好言好语慢慢劝，生怕话说重了伤感情。",
+     "weights": {
+      "m_rou": 2
+     }
+    },
+    {
+     "text": "不当面说，找个他信得过的人去跟他讲。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "譬如父母訶教子孫"
+   },
+   "rationale": "粗：“譬如父母訶教子孫，雖口剛急而心猶愛”，此题只取其“口剛急”一面；痴：“如龍興雲而不雷”；柔：“語言柔軟”；托人转达为中性项非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。",
+   "derived": true,
+   "draft_id": "st_M05"
+  },
+  {
+   "id": "S11",
+   "section": "stress",
+   "domain": "heart",
+   "context": "stress",
+   "format": "choice",
+   "text": "连续一段时间压力很大、心情很差时，我的日常通常会变成什么样？",
+   "options": [
+    {
+     "text": "想出门逛逛、买点好看的、打扮一下，让心情亮起来。",
+     "weights": {
+      "h_tan": 2
+     }
+    },
+    {
+     "text": "睡得更少，反而更拼命地干活。",
+     "weights": {
+      "h_chen": 2
+     }
+    },
+    {
+     "text": "吃得多、睡得多，什么都提不起劲。",
+     "weights": {
+      "h_chi": 2
+     }
+    },
+    {
+     "text": "跟平时差不多，没什么明显变化。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "多憂嗜臥多食無節"
+   },
+   "rationale": "贪：“常喜出城行遊觀”“喜淨潔衣好著文飾”；瞋：“多寤少寐”“勤力精進修大事”；痴：“多憂嗜臥多食無節”；照常为中性项非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。",
+   "derived": true,
+   "draft_id": "st_H06"
+  },
+  {
+   "id": "S12",
+   "section": "stress",
+   "domain": "mouth",
+   "context": "stress",
+   "format": "choice",
+   "text": "跟人吵完架或激烈争论过后，回想自己说过的话，最常见的是哪一种？",
+   "options": [
+    {
+     "text": "说了不少带刺的话，有几句明显伤到了对方。",
+     "weights": {
+      "m_cu": 2
+     }
+    },
+    {
+     "text": "我几乎一直在让步、附和，真正想说的反而没说出口。",
+     "weights": {
+      "m_rou": 2
+     }
+    },
+    {
+     "text": "想不起自己说了什么，好像一直没说到点上。",
+     "weights": {
+      "m_chi": 2
+     }
+    },
+    {
+     "text": "说的话和平时差不多，谈不上特别冲，也谈不上特别软。",
+     "weights": {}
+    }
+   ],
+   "source": {
+    "pin": "分別相品",
+    "quote": "口言而柔順"
+   },
+   "rationale": "柔：偈“口言而柔順”“順從不違”；粗：“語言剛急中傷於人”；痴：“所言不了了”“不曉善惡義所歸趣”；第四项为中性项，非经文所出。经文描述的是常态性情，压力情境下的表现依经文通则推出。（审稿将中性项由“我很少跟人吵到那个地步”改为不回避题目的中性表述，原项既是逃避选项又有明显赞许性。）",
+   "derived": true,
+   "draft_id": "st_M06"
+  }
+ ]
+};

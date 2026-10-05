@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>十九种人</title>
+<meta name="description" content="依《修行道地经·分别相品》的“十九种人”观察自己的心与口，找到对症的修行方法。">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f4efe4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1815" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%239e3324'/%3E%3Cpath d='M32 12a20 20 0 1 0 19.2 14.4' fill='none' stroke='%23fbf8f1' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23fbf8f1'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap"></noscript>
+<link rel="stylesheet" href="assets/style.css">
+<script>
+  // 尽早应用手动选择的主题，避免闪烁
+  (function () {
+    try {
+      var t = localStorage.getItem('shijiuzhong.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#app" id="skip-link">跳到正文</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#/" aria-label="十九种人 首页"><span class="brand-seal" aria-hidden="true">十九</span><span>十九种人</span></a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="#/" data-nav="home">首页</a>
+      <a href="#/quiz" data-nav="quiz">测评</a>
+      <a href="#/types" data-nav="types">十九种</a>
+      <a href="#/practices" data-nav="practices">修行法</a>
+      <a href="#/virtues" data-nav="virtues">五德</a>
+      <a href="#/about" data-nav="about">关于</a>
+    </nav>
+    <button type="button" class="btn btn-ghost icon-btn theme-toggle" id="theme-toggle" aria-label="切换深浅色模式">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9A9 9 0 0 0 12 3Zm0 16V5a7 7 0 0 1 0 14Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="app" tabindex="-1">
+  <div class="wrap">
+    <noscript><p class="notice">本站的问卷与结果页需要启用 JavaScript。</p></noscript>
+    <p class="muted">正在载入……</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>经文出处：CBETA 中华电子佛典协会《大正新脩大藏经》T15 no.606《修行道地经》（西晋竺法护译）、T15 no.618《达摩多罗禅经》（东晋佛陀跋陀罗译）。引文保留繁体原文，白话为本站所作。</p>
+    <p>本测评仅供自我观察与修行参考，不是心理或医学测验。<a href="#/about">关于与免责声明</a></p>
+  </div>
+</footer>
+
+<script src="data/questions.js"></script>
+<script src="data/types.js"></script>
+<script src="data/practices.js"></script>
+<script src="data/virtues.js"></script>
+<script src="data/about.js"></script>
+<script src="assets/scoring.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
