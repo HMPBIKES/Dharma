@@ -20,9 +20,24 @@
   var VIRTUE = {}; VIRTUES.forEach(function (v) { VIRTUE[v.id] = v; });
   var SECTION = {}; (QDATA.sections || []).forEach(function (s) { SECTION[s.id] = s; });
 
+  // 法师宜说之法 / 书单
+  var TEACH = window.TEACHINGS || { intro: null, themes: [], cards: [], card_aliases: {}, types: {} };
+  var CARDS = TEACH.cards || [];
+  var CARD = {}; CARDS.forEach(function (c) { CARD[c.id] = c; });
+  var CARD_ALIAS = TEACH.card_aliases || {};
+  var THEMES = TEACH.themes || [];
+  var THEME = {}; THEMES.forEach(function (th) { THEME[th.key] = th; });
+  var CARD_TYPES = {};   // 书卡 id → 把它列入书单的类型编号
+  for (var tn = 1; tn <= 19; tn++) {
+    ((TEACH.types || {})[tn] && TEACH.types[tn].readings || []).forEach(function (r) {
+      (CARD_TYPES[r.id] = CARD_TYPES[r.id] || []).push(tn);
+    });
+  }
+
   var STORE_QUIZ = 'shijiuzhong.quiz.v1';
   var STORE_LAST = 'shijiuzhong.last';
   var STORE_THEME = 'shijiuzhong.theme';
+  var STORE_RFILTER = 'shijiuzhong.readings.filter';
 
   var SUTRA_CITE = '《修行道地经》卷二〈分别相品第八〉，CBETA T15n0606';
 
@@ -209,7 +224,7 @@
     });
     return { name: parts[0] || 'home', arg: parts[1] };
   }
-  var NAV_OF = { home: 'home', quiz: 'quiz', result: 'quiz', types: 'types', type: 'types', practices: 'practices', practice: 'practices', virtues: 'virtues', about: 'about' };
+  var NAV_OF = { home: 'home', quiz: 'quiz', result: 'quiz', types: 'types', type: 'types', practices: 'practices', practice: 'practices', readings: 'readings', virtues: 'virtues', about: 'about' };
 
   function render() {
     var r = parseRoute();
@@ -262,6 +277,7 @@
       '<section class="section"><h2>从这里开始了解</h2><div class="grid-cards">' +
         homeCard('#/types', '十九种人', '心性七型 × 口心十二型的经文原文与白话') +
         homeCard('#/practices', '修行法', '不净观、慈心、十二因缘、数息等 ' + PRACTICES.length + ' 种对治方法') +
+        (CARDS.length ? homeCard('#/readings', '书单', '法师宜说之法：按类型推荐的 ' + CARDS.length + ' 部经论选段') : '') +
         homeCard('#/virtues', '五德', '信、精进、智慧、质直、有志') +
         homeCard('#/about', '关于与免责声明', '经文出处、测评的局限') +
       '</div></section>';
@@ -527,7 +543,7 @@
       (it.derived ? ' <span class="tag tag-derived">依经文通则推出</span>' : '') + '</li>';
   }
 
-  function typeDetail(t, hLevel) {
+  function typeDetail(t, hLevel, opts) {
     var H = 'h' + (hLevel || 2), H2 = 'h' + ((hLevel || 2) + 1);
     var html = '';
     html += '<div class="detail-block"><' + H2 + '>经文原文</' + H2 + '>' +
@@ -572,6 +588,8 @@
         (t.prescription.quote ? '<blockquote class="sutra">' + sutra(t.prescription.quote) + '<span class="cite">' + (t.prescription.explicit ? '经文为此型所开' : '经文通则（非为此型单独所开）') + '</span></blockquote>' : '') +
         '<p>' + txt(t.prescription.plain) + '</p></div>';
     }
+    // 法师宜说之法
+    html += teachSection(t, hLevel || 2, opts || {});
     // 推荐修行法
     html += '<div class="detail-block"><' + H2 + '>推荐修行法</' + H2 + '>' + practiceChips(t.practices, t.practices_derived) +
       (t.practices_derived && t.practices_derived.length
@@ -584,6 +602,321 @@
         adv.map(function (a) { return '<li>' + txt(a) + '</li>'; }).join('') + '</ol></div>';
     }
     return html;
+  }
+
+  /* ================= 法师宜说之法 · 书卡 ================= */
+  function teachOf(n) { return (TEACH.types || {})[String(n)] || null; }
+  function cardById(id) { return CARD[id] || CARD[CARD_ALIAS[id]] || null; }
+  function hTag(n) { return 'h' + Math.min(6, Math.max(1, n)); }
+  function typeRefLink(n) {
+    var t = typeById(n);
+    return t ? '<a href="#/type/' + n + '">' + typeNumLabel(n) + '「<span lang="zh-Hant">' + esc(t.name_trad) + '</span>」</a>' : '';
+  }
+  function cardDerivedTag(c) {
+    return c.derived
+      ? '<span class="tag tag-derived" title="这部书适合哪一型，是本站依经文通则所作的判断">本站推出</span>'
+      : '<span class="tag tag-explicit" title="经论本身明说此法对治某种烦恼">经论明说</span>';
+  }
+  function firstTag() { return '<span class="tag tag-first">先读</span>'; }
+
+  // 一张书卡。opts：forThis（为此型而写的说明）、isFirst、from（来源说明 HTML）、H（标题层级）、anchor（是否带 id，供 #/readings/<id> 定位）
+  function readingCard(c, opts) {
+    opts = opts || {};
+    var H = opts.H || 'h3';
+    var noQuote = !c.key_quote;
+    var html = '<article class="book-card' + (opts.isFirst ? ' is-first' : '') + '"' +
+      (opts.anchor ? ' id="card-' + esc(c.id) + '" tabindex="-1"' : '') + ' data-card="' + esc(c.id) + '">';
+    html += '<div class="book-head">' +
+      '<' + H + ' class="book-title">' + (opts.isFirst ? firstTag() + ' ' : '') +
+        '<a href="#/readings/' + esc(c.id) + '">' + esc(c.title) + '</a>' + '</' + H + '>' +
+      (c.title_trad ? '<div class="book-sub" lang="zh-Hant">' + markPua(esc(c.title_trad)) + '</div>' : '') +
+      '<div class="book-tags">' +
+        (c.tradition ? '<span class="tag tag-plain">' + esc(c.tradition) + '</span>' : '') +
+        (c.level ? '<span class="tag tag-plain">' + esc(c.level) + '</span>' : '') +
+        cardDerivedTag(c) +
+        (noQuote ? '<span class="tag tag-ext">延伸参考</span>' : '') +
+      '</div></div>';
+    if (opts.from) html += '<p class="book-from">' + opts.from + '</p>';
+    var forText = opts.forThis || c.why;
+    if (forText) html += '<p class="book-for">' + txt(forText) + '</p>';
+    if (c.key_quote) {
+      html += '<blockquote class="sutra book-quote">' + sutra(c.key_quote.text) +
+        '<span class="cite">' + esc(c.key_quote.where || '') + (c.book ? ' · CBETA ' + esc(c.book) : '') + '</span></blockquote>';
+    } else {
+      html += '<p class="notice small">本站语料中没有这部书，原文未在本站核对，因此不提供引文；请以原书为准。</p>';
+    }
+    if (c.read_guide) html += '<p class="block-label">先读哪一段</p><p>' + txt(c.read_guide) + '</p>';
+    var meta = [];
+    if (c.length_hint) meta.push('<span><span class="meta-k">篇幅</span>' + esc(c.length_hint) + '</span>');
+    if (c.canon) meta.push('<span><span class="meta-k">出处</span>' + markPua(esc(c.canon)) + '</span>');
+    if (c.parallels) meta.push('<span><span class="meta-k">对应</span>' + esc(c.parallels) + '</span>');
+    if (meta.length) html += '<p class="book-meta">' + meta.join('') + '</p>';
+    if (c.practices && c.practices.length) html += '<p class="block-label">相关修行法</p>' + practiceChips(c.practices);
+    if (!c.derived && c.basis) {
+      html += '<p class="book-basis"><span class="meta-k">经论明说</span><span class="quote-inline">「' + sutra(c.basis) + '」</span></p>';
+    }
+    var more = '';
+    if (opts.forThis && c.why) more += '<p>' + txt(c.why) + '</p>';
+    if (c.more_quotes && c.more_quotes.length) {
+      more += c.more_quotes.map(function (q) {
+        return '<blockquote class="sutra">' + sutra(q.text) + '<span class="cite">' + esc(q.where || '') + '</span></blockquote>';
+      }).join('');
+    }
+    if (opts.types && opts.types.length) {
+      more += '<p class="small">列入书单的类型：' + opts.types.map(typeRefLink).join('、') + '</p>';
+    }
+    if (more) html += '<details class="book-more"><summary>' + (opts.forThis ? '关于这部书' : '更多引文') + '</summary>' + more + '</details>';
+    if (c.note) html += '<p class="note">' + txt(c.note) + '</p>';
+    html += '</article>';
+    return html;
+  }
+
+  // 精简书目（结果页类型详解中用，避免与合并书单重复）
+  function miniReadingList(items) {
+    return '<ol class="book-mini-list">' + items.map(function (it) {
+      var c = it.card;
+      return '<li>' + (it.isFirst ? firstTag() + ' ' : '') + '<a href="#/readings/' + esc(c.id) + '">' + esc(c.title) + '</a>' +
+        (it.text ? '<span class="d">' + txt(it.text) + '</span>' : '') + '</li>';
+    }).join('') + '</ol>';
+  }
+
+  function teachSection(t, hLevel, opts) {
+    var T = teachOf(t.id);
+    if (!T) return '';
+    var H2 = hTag(hLevel + 1), H3 = hTag(hLevel + 2), H4 = hTag(hLevel + 3);
+    var te = T.teach_explicit || {};
+    var html = '<div class="detail-block teach-block"><' + H2 + '>法师宜说之法</' + H2 + '>' +
+      '<p class="small muted">经中法师怎样为这一型说法、宜怎样说，以及这一型宜读的经论。<a href="#/readings">全部书单 →</a></p>';
+    html += '<' + H3 + '>经中说法 ' + tag(te.explicit) + '</' + H3 + '>';
+    if (te.quote) {
+      html += '<blockquote class="sutra">' + sutra(te.quote) + '<span class="cite">' + esc(te.where || '') +
+        (te.explicit ? '' : '（经文通则，非为此型单独所说）') + '</span></blockquote>';
+    }
+    if (te.plain) html += '<p>' + txt(te.plain) + '</p>';
+    if (T.approach && T.approach.length) {
+      html += '<' + H3 + '>宜怎样说</' + H3 + '><ol class="approach-list">' + T.approach.map(function (a) {
+        return '<li>' + txt(a.text) +
+          (a.derived ? ' <span class="tag tag-derived" title="依经文通则推出">推</span>' : '') +
+          (a.quote ? '<span class="approach-quote"><span class="quote-inline">「' + sutra(a.quote) + '」</span>' +
+            (a.where ? '<span class="approach-where">' + esc(a.where) + '</span>' : '') + '</span>' : '') +
+        '</li>';
+      }).join('') + '</ol>';
+    }
+    var items = (T.readings || []).map(function (r) {
+      var c = cardById(r.id);
+      return c ? { card: c, text: r.for_this, isFirst: c.id === (cardById(T.first) || {}).id } : null;
+    }).filter(Boolean);
+    // “先读”的一部排在最前
+    items.sort(function (a, b) { return (b.isFirst ? 1 : 0) - (a.isFirst ? 1 : 0); });
+    if (items.length) {
+      html += '<' + H3 + '>宜闻之法</' + H3 + '>';
+      if (opts.compactReadings) {
+        html += miniReadingList(items) +
+          '<p class="no-print"><button type="button" class="btn btn-small" data-jump="sec-readings">看合并后的「你的宜闻之法」↓</button></p>';
+      } else {
+        html += '<p class="small muted">共 ' + items.length + ' 部，标“先读”的一部建议最先读。标“经论明说”的，是经论本身说过此法对治某种烦恼；标“本站推出”的，是本站依经文通则所作的搭配。</p>' +
+          '<div class="book-list">' + items.map(function (it) {
+            return readingCard(it.card, { forThis: it.text, isFirst: it.isFirst, H: H4 });
+          }).join('') + '</div>';
+      }
+    }
+    if (T.caution) html += '<' + H3 + '>读经提醒</' + H3 + '><p class="notice">' + txt(T.caution) + '</p>';
+    html += '</div>';
+    return html;
+  }
+
+  // 结果页：合并心性类型与口心类型的书单（规则见 teachings.json 的 combos_note）
+  var COMBO_HEART_TAKE = 5, COMBO_MAX = 8;
+  function combineReadings(ht, mt) {
+    var A = teachOf(ht.id) || {}, B = teachOf(mt.id) || {};
+    var main = [], more = [], seen = {};
+    function add(r, t, isHeart, intoMain) {
+      var c = cardById(r.id);
+      if (!c) return;
+      var e = seen[c.id];
+      if (e) {
+        if (e.from.indexOf(t.id) < 0) e.from.push(t.id);
+        if (isHeart && r.for_this) e.text = r.for_this;   // 同一书卡保留心性类型的说明
+        return;
+      }
+      e = { card: c, text: r.for_this, from: [t.id] };
+      seen[c.id] = e;
+      (intoMain && main.length < COMBO_MAX ? main : more).push(e);
+    }
+    var hr = A.readings || [], mr = B.readings || [];
+    hr.slice(0, COMBO_HEART_TAKE).forEach(function (r) { add(r, ht, true, true); });
+    mr.forEach(function (r) { add(r, mt, false, true); });
+    hr.slice(COMBO_HEART_TAKE).forEach(function (r) { add(r, ht, true, false); });
+    // 入门书用心性类型的 first（没有时退回口心类型的 first）
+    var first = cardById(A.first) || cardById(B.first);
+    if (first) {
+      var idx = -1;
+      main.forEach(function (e, i) { if (e.card.id === first.id) idx = i; });
+      if (idx < 0) {
+        more.forEach(function (e, i) { if (e.card.id === first.id) idx = 1000 + i; });
+        var moved = idx >= 1000 ? more.splice(idx - 1000, 1)[0] : null;
+        if (moved) { main.unshift(moved); if (main.length > COMBO_MAX) more.unshift(main.pop()); }
+      } else if (idx > 0) {
+        main.unshift(main.splice(idx, 1)[0]);
+      }
+      if (main[0] && main[0].card.id === first.id) main[0].isFirst = true;
+    }
+    return { main: main, more: more };
+  }
+  function fromLabel(ids) {
+    if (ids.length > 1) return '<span class="tag tag-both">两型共荐</span> ' + ids.map(typeRefLink).join('、');
+    var t = typeById(ids[0]);
+    return '来自' + (t ? groupLabel(t) : '') + ' ' + typeRefLink(ids[0]);
+  }
+  function resultReadingsSection(ht, mt) {
+    var R = combineReadings(ht, mt);
+    if (!R.main.length) return '';
+    var html = '<hr><section class="section" id="sec-readings"><h2>你的宜闻之法</h2>' +
+      '<p class="lead">依你的心性类型「<span lang="zh-Hant">' + esc(ht.name_trad) + '</span>」与口心类型「<span lang="zh-Hant">' + esc(mt.name_trad) + '</span>」合并两张书单：先心性、后口业，同一部书只列一次，共 ' + R.main.length + ' 部。标“先读”的一部建议最先读。</p>' +
+      '<p class="small muted">哪部书适合哪一型、怎样排序，是本站依经文通则所作的判断；书中引文都已与 CBETA 原文逐字核对。<a href="#/readings">浏览全部书单 →</a></p>' +
+      '<div class="book-list">' + R.main.map(function (e) {
+        return readingCard(e.card, { forThis: e.text, isFirst: e.isFirst, from: fromLabel(e.from), H: 'h3' });
+      }).join('') + '</div>';
+    if (R.more.length) {
+      html += '<details class="book-more-list"><summary>更多（' + R.more.length + ' 部）</summary>' +
+        miniReadingList(R.more.map(function (e) { return { card: e.card, text: e.text }; })) + '</details>';
+    }
+    html += '</section>';
+    return html;
+  }
+
+  /* ================= 书单页 ================= */
+  var RFILTER_GROUPS = [
+    { key: 'h', label: '三毒', field: 'dims', opts: ['h_tan', 'h_chen', 'h_chi'] },
+    { key: 'm', label: '口业', field: 'dims', opts: ['m_rou', 'm_cu', 'm_chi'] },
+    { key: 'v', label: '五德', field: 'virtues', opts: ['xin', 'jin', 'hui', 'zhi', 'yi'] }
+  ];
+  var RFILTER_LABEL = { h_tan: '贪', h_chen: '瞋', h_chi: '痴' };
+  function loadRFilter() {
+    var f = storageGet(STORE_RFILTER), out = { h: '', m: '', v: '' };
+    if (f && typeof f === 'object') {
+      RFILTER_GROUPS.forEach(function (g) { if (g.opts.indexOf(f[g.key]) >= 0) out[g.key] = f[g.key]; });
+    }
+    return out;
+  }
+  function cardMatches(c, f) {
+    var tg = c.targets || {};
+    return RFILTER_GROUPS.every(function (g) {
+      return !f[g.key] || (tg[g.field] || []).indexOf(f[g.key]) >= 0;
+    });
+  }
+  function themeOf(c) { return (c.themes && c.themes[0]) || ''; }
+
+  function viewReadings(arg) {
+    var intro = TEACH.intro || {};
+    var html = '<p class="eyebrow">法师宜说之法</p><h1>书单</h1>' +
+      (intro.plain ? '<p class="lead">' + txt(intro.plain) + '</p>' : '') +
+      (intro.quote ? '<blockquote class="sutra">' + sutra(intro.quote.text) + '<span class="cite">' + esc(intro.quote.where || '') + '</span></blockquote>' : '');
+    if (!CARDS.length) return { html: html + '<p class="notice">书单数据未载入，请确认 data/teachings.js 存在。</p>', title: '书单' };
+    html += '<div class="rfilter no-print" role="search" aria-label="筛选书卡">' + RFILTER_GROUPS.map(function (g) {
+      return '<div class="rfilter-group" role="group" aria-labelledby="rf-' + g.key + '"><span class="rfilter-label" id="rf-' + g.key + '">' + esc(g.label) + '</span><div class="rfilter-opts">' +
+        ['' ].concat(g.opts).map(function (o) {
+          return '<button type="button" class="chip chip-toggle" data-fgroup="' + g.key + '" data-fval="' + o + '" aria-pressed="false">' +
+            esc(o ? (RFILTER_LABEL[o] || DIM_LABEL[o] || o) : '全部') + '</button>';
+        }).join('') + '</div></div>';
+    }).join('') +
+      '<p class="rfilter-foot"><span class="status-msg" id="rfilter-status" role="status" aria-live="polite"></span>' +
+      '<button type="button" class="btn btn-ghost btn-small" id="rfilter-reset">清除筛选</button></p></div>';
+    html += '<nav class="practice-links theme-toc no-print" aria-label="主题目录">' + THEMES.map(function (th) {
+      return '<a class="chip" href="#/readings" data-theme-jump="theme-' + esc(th.key) + '">' + esc(th.name) + '</a>';
+    }).join('') + '</nav>';
+    html += THEMES.map(function (th) {
+      var list = CARDS.filter(function (c) { return themeOf(c) === th.key; });
+      if (!list.length) return '';
+      return '<section class="section theme-sec" id="theme-' + esc(th.key) + '" data-theme-sec="' + esc(th.key) + '">' +
+        '<h2>' + esc(th.name) + ' <span class="muted small theme-count"></span></h2>' +
+        (th.plain ? '<p class="muted">' + txt(th.plain) + '</p>' : '') +
+        '<div class="book-list">' + list.map(function (c) {
+          return readingCard(c, { H: 'h3', anchor: true, types: CARD_TYPES[c.id] || [] });
+        }).join('') + '</div>' +
+        '<p class="muted small theme-empty" hidden>此主题下没有符合筛选条件的书卡。</p>' +
+      '</section>';
+    }).join('');
+    // 不属于任何已知主题的书卡（正常情况下没有）
+    var orphan = CARDS.filter(function (c) { return !THEME[themeOf(c)]; });
+    if (orphan.length) {
+      html += '<section class="section theme-sec" data-theme-sec="_"><h2>其他</h2><div class="book-list">' +
+        orphan.map(function (c) { return readingCard(c, { H: 'h3', anchor: true, types: CARD_TYPES[c.id] || [] }); }).join('') + '</div></section>';
+    }
+
+    var target = arg ? cardById(arg) : null;
+    return { html: html, title: target ? target.title + ' · 书单' : '书单', keepScroll: !!target, noFocus: !!target, after: function () {
+      var f = loadRFilter();
+      var status = document.getElementById('rfilter-status');
+      function apply(note) {
+        var shown = 0;
+        Array.prototype.forEach.call(app.querySelectorAll('.book-card[data-card]'), function (el) {
+          var ok = cardMatches(CARD[el.getAttribute('data-card')], f);
+          el.hidden = !ok;
+          if (ok) shown++;
+        });
+        Array.prototype.forEach.call(app.querySelectorAll('.theme-sec'), function (sec) {
+          var all = sec.querySelectorAll('.book-card').length;
+          var vis = sec.querySelectorAll('.book-card:not([hidden])').length;
+          var cnt = sec.querySelector('.theme-count');
+          if (cnt) cnt.textContent = vis === all ? all + ' 部' : vis + ' / ' + all + ' 部';
+          var empty = sec.querySelector('.theme-empty');
+          if (empty) empty.hidden = vis > 0;
+        });
+        Array.prototype.forEach.call(app.querySelectorAll('[data-fgroup]'), function (b) {
+          b.setAttribute('aria-pressed', String(f[b.getAttribute('data-fgroup')] === b.getAttribute('data-fval')));
+        });
+        var active = RFILTER_GROUPS.filter(function (g) { return f[g.key]; }).map(function (g) {
+          return g.label + '：' + (RFILTER_LABEL[f[g.key]] || DIM_LABEL[f[g.key]]);
+        });
+        if (status) status.textContent = (note ? note + ' ' : '') + '显示 ' + shown + ' / ' + CARDS.length + ' 部' +
+          (active.length ? '（' + active.join('，') + '）' : '') + '。';
+        var reset = document.getElementById('rfilter-reset');
+        if (reset) reset.hidden = !active.length;
+      }
+      Array.prototype.forEach.call(app.querySelectorAll('[data-fgroup]'), function (b) {
+        b.addEventListener('click', function () {
+          f[b.getAttribute('data-fgroup')] = b.getAttribute('data-fval');
+          storageSet(STORE_RFILTER, f);
+          apply();
+        });
+      });
+      var reset = document.getElementById('rfilter-reset');
+      if (reset) reset.addEventListener('click', function () {
+        f = { h: '', m: '', v: '' };
+        storageSet(STORE_RFILTER, f);
+        apply();
+        // 按钮清除后隐藏，焦点移到第一组的“全部”，免得键盘焦点丢到页面开头
+        var firstAll = app.querySelector('[data-fgroup][data-fval=""]');
+        if (firstAll) firstAll.focus();
+      });
+
+      Array.prototype.forEach.call(app.querySelectorAll('[data-theme-jump]'), function (a) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          var el = document.getElementById(a.getAttribute('data-theme-jump'));
+          if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); var h = el.querySelector('h2'); h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (x) { /* 忽略 */ } }
+        });
+      });
+      var note = '';
+      if (target && !cardMatches(target, f)) {
+        // 直接打开某张书卡，而它被筛选条件隐藏时：清除筛选
+        f = { h: '', m: '', v: '' };
+        storageSet(STORE_RFILTER, f);
+        note = '为显示这张书卡，已清除筛选。';
+      }
+      apply(note);
+      if (target) {
+        var el = document.getElementById('card-' + target.id);
+        if (el) {
+          el.classList.add('is-target');
+          el.scrollIntoView({ block: 'start' });
+          try { el.focus({ preventScroll: true }); } catch (x) { el.focus(); }
+        }
+      } else if (arg) {
+        if (status) status.textContent = '没有找到书卡「' + arg + '」。' + status.textContent;
+      }
+    } };
   }
 
   function typeHead(t, H) {
@@ -610,6 +943,7 @@
       '<p class="muted small">自评结果仅供自我观察，不是诊断；最好与了解你的老师或朋友一起对照。<a href="#/about">免责声明</a></p>';
 
     html += '<div class="type-cards">' + typeCard(ht, '心性类型', 'sec-heart') + typeCard(mt, '口心类型', 'sec-mouth') + '</div>';
+    html += '<p class="no-print"><button type="button" class="btn btn-small btn-ghost" data-jump="sec-readings">看你的宜闻之法（推荐经论）↓</button></p>';
 
     // 图表
     html += '<section class="section"><h2>分数一览</h2><div class="chart-grid">' +
@@ -644,10 +978,13 @@
     html += '<section class="section"><h2>平时与压力下</h2><div class="card compare">' + compareText(r, ht, mt, sht, smt) + '</div></section>';
 
     // 完整内容
-    html += '<section class="section" id="sec-heart"><h2 class="sr-only">心性类型详解</h2>' + typeHead(ht, 'h3') + typeDetail(ht, 3) +
+    html += '<section class="section" id="sec-heart"><h2 class="sr-only">心性类型详解</h2>' + typeHead(ht, 'h3') + typeDetail(ht, 3, { compactReadings: true }) +
       '<p><a href="#/type/' + ht.id + '">单独打开此型页面 →</a></p></section>';
-    html += '<hr><section class="section" id="sec-mouth"><h2 class="sr-only">口心类型详解</h2>' + typeHead(mt, 'h3') + typeDetail(mt, 3) +
+    html += '<hr><section class="section" id="sec-mouth"><h2 class="sr-only">口心类型详解</h2>' + typeHead(mt, 'h3') + typeDetail(mt, 3, { compactReadings: true }) +
       '<p><a href="#/type/' + mt.id + '">单独打开此型页面 →</a></p></section>';
+
+    // 你的宜闻之法（合并两型书单）
+    html += resultReadingsSection(ht, mt);
 
     // 低分之德的培养方法
     if (lowV) {
@@ -672,7 +1009,7 @@
       Array.prototype.forEach.call(app.querySelectorAll('[data-jump]'), function (b) {
         b.addEventListener('click', function () {
           var el = document.getElementById(b.getAttribute('data-jump'));
-          if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); var h = el.querySelector('h3'); if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) { /* 忽略 */ } } }
+          if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); var h = el.querySelector('h2:not(.sr-only), h3'); if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) { /* 忽略 */ } } }
         });
       });
       var copy = document.getElementById('copy-link');
@@ -837,6 +1174,9 @@
         (p.modern.when ? '<h3>什么时候用</h3><p>' + txt(p.modern.when) + '</p>' : '') + '</div>';
     }
     if (p.cautions) html += '<div class="detail-block"><h2>注意</h2><p class="notice">' + txt(p.cautions) + '</p></div>';
+    var pCards = CARDS.filter(function (c) { return (c.practices || []).indexOf(id) >= 0; });
+    if (pCards.length) html += '<div class="detail-block"><h2>相关书卡</h2>' +
+      miniReadingList(pCards.map(function (c) { return { card: c }; })) + '</div>';
     if (users.length) html += '<div class="detail-block"><h2>推荐给</h2><ul class="practice-links">' + users.map(function (t) {
       return '<li><a class="chip" href="#/type/' + t.id + '">' + typeNumLabel(t.id) + ' ' + esc(t.name_trad) + '</a></li>';
     }).join('') + (vUsers.map(function (v) { return '<li><a class="chip" href="#/virtues/' + esc(v.id) + '">培养「' + esc(v.name) + '」</a></li>'; }).join('')) + '</ul></div>';
@@ -890,6 +1230,8 @@
       '<section class="section"><h2>关于两部经</h2><p>' + txt(ABOUT.about_sutra) + '</p></section>' +
       '<section class="section"><h2>测评怎样分类</h2><p>' + txt(ABOUT.how_it_works) + '</p>' +
         '<p>计分方式：每道“像不像我”的题，按 1–5 分减去中间值 3 再乘以权重（反向题取反）；情境选择题计入所选选项的分数。每个维度在“平时”与“压力下”两种情境中分别换算为 0–100。三毒中与最高分相差不超过 ' + S.GAP + ' 分、且不低于 ' + S.FLOOR + ' 分的记为“突出”；若都不到门槛，取最高的一项。这些门槛是本站为了分类而设的约定，不是经文的规定。</p></section>' +
+      (ABOUT.readings_sources ? '<section class="section" id="readings-sources"><h2>书单的来源与核对</h2>' + String(ABOUT.readings_sources).split('\n').map(function (p) { return '<p>' + txt(p) + '</p>'; }).join('') +
+        '<p><a href="#/readings">打开书单 →</a></p></section>' : '') +
       '<section class="section"><h2>隐私</h2><p>本站是纯静态网页，没有服务器端程序，也不收集任何数据。你的答案只保存在你自己浏览器的本地存储里（无法保存时也能正常答题，只是刷新后不能续答）。分享链接只包含各项分数，不含逐题答案。</p></section>' +
       '<section class="section"><h2>出处与体例</h2><p>' + txt(ABOUT.sources) + '</p>' +
         '<p class="small muted">标注说明：<span class="tag tag-explicit">经文明说</span> 指经文直接说出的内容；<span class="tag tag-derived">依经文通则推出</span> 指经文没有直说、本站依经文的一般原则推出的内容；体貌与果报的描述反映古代印度观念，仅供了解。</p></section>';
@@ -907,7 +1249,7 @@
 
   var VIEWS = {
     home: viewHome, quiz: viewQuiz, result: viewResult, types: viewTypes, type: viewType,
-    practices: viewPractices, practice: viewPractice, virtues: viewVirtues, about: viewAbout
+    practices: viewPractices, practice: viewPractice, readings: viewReadings, virtues: viewVirtues, about: viewAbout
   };
 
   /* ================= 启动 ================= */
@@ -926,6 +1268,17 @@
     if (skip) skip.addEventListener('click', function (e) { e.preventDefault(); app.focus(); });
     if (!S) { app.innerHTML = '<div class="wrap"><p class="notice">计分模块未载入，请确认 assets/scoring.js 存在。</p></div>'; return; }
     window.addEventListener('hashchange', render);
+    // 点当前已打开的书卡标题（hash 不变，不会触发 hashchange）：重新定位并聚焦该书卡
+    app.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href^="#/readings/"]') : null;
+      if (!a || a.getAttribute('href') !== location.hash) return;
+      var c = cardById(a.getAttribute('href').split('/').pop());
+      var card = c ? document.getElementById('card-' + c.id) : null;
+      if (!card || card.hidden) return;
+      e.preventDefault();
+      card.scrollIntoView({ block: 'start' });
+      try { card.focus({ preventScroll: true }); } catch (x) { card.focus(); }
+    });
     render();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();

@@ -25,28 +25,22 @@ tools/build-data.js   把 content/*.json 包装成 data/*.js，并做一致性�
 | --- | --- |
 | `#/` | 首页 |
 | `#/quiz` | 答题（一屏一题，可返回上一题，键盘 1–5 选择、← → 翻题） |
-| `#/result/<编码>` | 结果页（编码只含各项分数，不含逐题答案） |
-| `#/types`、`#/type/<n>` | 十九种总览、单型详情 |
+| `#/result/<编码>` | 结果页（编码只含各项分数，不含逐题答案）；两型详解之后是“你的宜闻之法”，合并两型书单 |
+| `#/types`、`#/type/<n>` | 十九种总览、单型详情（“法师开的药”之后为“法师宜说之法”：经中说法、宜怎样说、宜闻之法书卡、读经提醒） |
 | `#/practices`、`#/practice/<id>` | 修行法列表、修行法详情 |
+| `#/readings`、`#/readings/<书卡 id>` | 书单（法师宜说之法）：按七个主题列出全部书卡，可按三毒、口业、五德筛选（筛选条件存在 localStorage）；带 id 时直接定位并聚焦该书卡，已合并的旧 id 也能打开 |
 | `#/virtues`、`#/virtues/<id>` | 五德（`<id>` 为 `xin jin hui zhi yi`，直接定位到该德） |
 | `#/about` | 关于与免责声明 |
 
 ## 部署到 GitHub Pages
 
-1. 在 GitHub 新建一个仓库（例如 `shijiuzhong`）。
-2. 把 `site/` 目录里的**全部内容**（`index.html` 必须在仓库根目录）提交并推送：
-   ```bash
-   cd site
-   git init
-   git add .
-   git commit -m "十九种人 网站"
-   git branch -M main
-   git remote add origin https://github.com/<你的用户名>/shijiuzhong.git
-   git push -u origin main
-   ```
-   如果网站放在已有仓库的子目录中，也可以在下一步选择 `/docs` 目录，把这些文件放进 `docs/`。
-3. 打开仓库的 **Settings → Pages**，在 **Build and deployment** 中把 Source 设为 **Deploy from a branch**，Branch 选 `main`、目录选 `/ (root)`（或 `/docs`），点 **Save**。
-4. 等一两分钟，页面顶部会显示网址，形如 `https://<你的用户名>.github.io/shijiuzhong/`。
+本仓库已部署在 <https://hmpbikes.github.io/Dharma/>：仓库根目录就是网站根目录（`index.html` 在根目录），推送到 `main` 分支后一两分钟内自动更新。
+
+若要另建一份：
+
+1. 在 GitHub 新建一个公开仓库，把本仓库的**全部内容**推送上去（`index.html` 必须在仓库根目录）。
+2. 打开仓库的 **Settings → Pages**，在 **Build and deployment** 中把 Source 设为 **Deploy from a branch**，Branch 选 `main`、目录选 `/ (root)`，点 **Save**。
+3. 等一两分钟，页面顶部会显示网址，形如 `https://<用户名>.github.io/<仓库名>/`。
 
 本站全部使用相对路径和 hash 路由，放在子路径下也能正常工作，不需要额外配置 404 页面。
 
@@ -79,12 +73,20 @@ tools/build-data.js   把 content/*.json 包装成 data/*.js，并做一致性�
      - choice 题：`options` 为选项数组，每项的 `weights` 即选中后计入的分数，`{}` 表示中性选项；
      - 维度键名固定为 `h_tan h_chen h_chi`（三毒）、`m_rou m_cu m_chi`（口业）、`v_xin v_jin v_hui v_zhi v_yi`（五德）。
    - `types_1_7.json`、`types_8_13.json`、`types_14_19.json`：十九种的经文、白话、譬喻、优点提醒、体貌、果报、药方、推荐修行法与现代建议。`practices` 是推荐修行法 id 列表；其中经文没有直接给这一型开、由本站依经文通则搭配的，同时列入 `practices_derived`，页面上会标“推”。
-   - `practices.json`、`virtues.json`、`about.json`：修行法、五德、关于页。
-2. 在 `site/` 目录下运行（需要 Node.js，无需安装任何依赖）：
+   - `practices.json`、`virtues.json`、`about.json`：修行法、五德、关于页（`about.json` 的 `readings_sources` 是关于页“书单的来源与核对”一段，用换行分段）。
+   - `teachings.json`：“法师宜说之法”与书单，生成 `data/teachings.js`（`window.TEACHINGS`）。结构：
+     - `intro`：书单页导语与一句经文（`quote.text` / `quote.where`）；
+     - `themes`：七个主题 `{key, name, plain}`，书单页按书卡 `themes` 的第一项分组；
+     - `cards`：书卡。`id` 唯一；`title`（简体名）、`title_trad`（繁体原名，作副标题）、`book`（CBETA 文件号，语料外的典籍为 `null`）、`canon`、`section`、`tradition`（汉传 / 南传对应 / 藏传 / 通用）、`parallels`（南传等对应经号，只作对照）、`level`（入门 / 进阶 / 深入）、`themes`、`targets`（`dims` 用 `h_* m_*` 键、`virtues` 用五德 id、`types` 为类型编号，供书单页筛选）、`why`（书单页显示的说明）、`key_quote`（`{text, where}`；语料外的“延伸参考”为 `null`，并在 `note` 写明原文未在本站核对）、`more_quotes`、`read_guide`（先读哪一段）、`length_hint`（篇幅）、`practices`（修行法 id）、`derived`（`true` 表示“这部书适合这一型”是本站判断，页面标“本站推出”；`false` 表示经论本身明说此法对治某毒，页面标“经论明说”）、`basis`（`derived` 为 `false` 时引出的那句原文）、`note`；
+     - `card_aliases`：已合并书卡的旧 id → 新 id，旧链接 `#/readings/<旧 id>` 仍可打开；
+     - `types`：`"1"`–`"19"`，每型有 `teach_explicit`（经中说法：`quote`、`where`、`explicit`、`plain`）、`approach`（宜怎样说：`text`、`quote`、`where`、`derived`，`derived` 的标“推”）、`readings`（`[{id, for_this}]`，`for_this` 是为此型写的推荐理由）、`first`（标“先读”的书卡 id，须在 `readings` 中）、`caution`；
+     - `combos_note`：结果页合并规则的说明。结果页“你的宜闻之法”按此实现（`assets/app.js` 的 `combineReadings`）：先取心性类型书单前 5 部，再按口心类型书单顺序补入未出现的书卡，合计最多 8 部；同一书卡只列一次，保留心性类型的推荐理由，“先读”用心性类型的 `first`；其余放在“更多”中。
+     - 所有引文（`key_quote`、`more_quotes`、`basis`、`teach_explicit.quote`、`approach[].quote`）都须逐字出自 CBETA 原文，`where` 按原文的卷名与品名 / 经名填写。
+2. 在站点根目录（即 `index.html` 所在目录）下运行（需要 Node.js，无需安装任何依赖）：
    ```bash
    node tools/build-data.js
    ```
-   脚本会检查 JSON 是否合法、十九种是否齐全、修行法 id 是否存在、维度键名是否正确，然后重写 `data/*.js`。有问题时会列出并中止，不会写入。
+   脚本会检查 JSON 是否合法、十九种是否齐全、修行法 id 是否存在、维度键名是否正确；对 `teachings.json` 还检查十九种齐全、书卡 id 唯一、`readings` 与 `first` 引用的书卡存在（`first` 须在 `readings` 中）、书卡的修行法 id / 主题 / 维度 / 五德合法、别名指向存在的书卡，然后重写 `data/*.js`。有问题时会列出并中止，不会写入。
 3. 刷新浏览器查看效果，确认无误后提交推送。
 
 注意：经文引文必须逐字出自 CBETA 原文；依经文通则推出、经文没有直说的内容，请在对应字段（`explicit` / `derived`）或文字中注明。

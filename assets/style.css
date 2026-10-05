@@ -98,11 +98,12 @@ img, svg { max-width: 100%; }
 a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
 a:hover { text-decoration-thickness: 2px; }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
-h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.4; letter-spacing: 0.02em; margin: 0 0 0.6em; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--serif); font-weight: 600; line-height: 1.4; letter-spacing: 0.02em; margin: 0 0 0.6em; }
 h1 { font-size: 1.9rem; }
 h2 { font-size: 1.4rem; margin-top: 2.2em; }
 h3 { font-size: 1.12rem; margin-top: 1.6em; }
 h4 { font-size: 1rem; margin-top: 1.2em; }
+h5, h6 { font-size: 0.98rem; margin-top: 1.2em; }
 p { margin: 0 0 1em; }
 ul, ol { padding-left: 1.4em; margin: 0 0 1em; }
 li { margin: 0.25em 0; }
@@ -131,6 +132,11 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
   .site-header .wrap { justify-content: space-between; }
   .site-nav { order: 3; flex-basis: 100%; justify-content: flex-start; margin: 0 -8px; }
   .site-nav a { padding: 4px 8px; font-size: 0.92rem; }
+}
+/* 窄屏（352–400px）：七个导航项排成一行，余下的宽度平均分给各项，字距均匀，每项仍不小于 44×44；更窄时照常换行 */
+@media (min-width: 352px) and (max-width: 400px) {
+  .site-nav { gap: 2px 0; margin: 0 -4px; flex-wrap: nowrap; }
+  .site-nav a { flex: 1 1 auto; padding: 4px 0; }
 }
 
 /* ---------- 按钮 ---------- */
@@ -316,6 +322,62 @@ details.table-view summary { cursor: pointer; color: var(--ink-2); padding: 10px
 .pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
 .pager > :last-child { margin-left: auto; }
 
+/* ---------- 法师宜说之法 · 书单 ---------- */
+.tag-first { background: var(--accent); color: var(--accent-ink); font-weight: 500; }
+.tag-ext { background: transparent; color: var(--muted); border: 1px dashed var(--line-strong); }
+.tag-both { background: var(--accent-soft); color: var(--accent); }
+.teach-block > p.small.muted:first-of-type { margin-top: -0.3em; }
+.approach-list { padding-left: 1.4em; }
+.approach-list li { margin: 0.7em 0; }
+.approach-quote { display: block; font-size: 0.9rem; margin-top: 2px; }
+.approach-where { display: inline-block; margin-left: 8px; font-size: 0.78rem; color: var(--muted); letter-spacing: 0; }
+.book-list { display: grid; gap: 16px; margin: 12px 0 1em; }
+.book-card { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px 14px; box-shadow: var(--shadow); min-width: 0; }
+.book-card[hidden] { display: none; }
+.book-card.is-first { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent), var(--shadow); }
+.book-card.is-target { outline: 2px solid var(--focus); outline-offset: 3px; }
+.book-card:focus { outline: none; }
+.book-card.is-target:focus { outline: 2px solid var(--focus); }
+.book-head { margin-bottom: 10px; }
+.book-title { font-size: 1.1rem; line-height: 1.5; margin: 0; letter-spacing: 0.02em; }
+.book-title a { color: var(--ink); text-decoration: none; padding: 13px 0; }   /* 行内上下留白：点击区域不小于 44px，不改变排版 */
+.book-title a:hover { color: var(--accent); text-decoration: underline; }
+.book-title .tag { vertical-align: 0.18em; }
+.book-sub { font-family: var(--serif-tc); color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-top: 2px; }
+.book-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.book-from { font-size: 0.86rem; color: var(--ink-2); margin: 0 0 8px; }
+.book-for { margin-bottom: 12px; }
+blockquote.book-quote { border-left-color: var(--accent); }
+.book-meta { display: grid; gap: 2px; font-size: 0.84rem; color: var(--ink-2); line-height: 1.6; margin: 0 0 12px; }
+.meta-k { display: inline-block; min-width: 2.6em; margin-right: 8px; font-size: 0.78rem; color: var(--muted); letter-spacing: 0.08em; }
+.book-basis { font-size: 0.9rem; margin: 0 0 10px; }
+.book-basis .meta-k { color: var(--tag-explicit-ink); }
+details.book-more { margin: 4px 0 6px; font-size: 0.94rem; }
+details.book-more summary { cursor: pointer; color: var(--ink-2); padding: 10px 0; min-height: 44px; }
+details.book-more blockquote.sutra { font-size: 0.94rem; }
+.book-card .note { margin-bottom: 0; }
+.book-card .practice-links { margin-bottom: 10px; }
+.book-mini-list { padding-left: 1.4em; margin: 0 0 1em; }
+.book-mini-list li { margin: 0.55em 0; }
+.book-mini-list a { padding: 13px 0; }
+/* 这两处链接有上下留白，焦点框会盖住邻近文字：改用加粗的焦点色下划线标示焦点 */
+.book-title a:focus-visible, .book-mini-list a:focus-visible { outline: none; color: var(--accent); text-decoration: underline; text-decoration-color: var(--focus); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+.book-mini-list .d { display: block; font-size: 0.9rem; color: var(--ink-2); }
+details.book-more-list { margin-top: 12px; }
+details.book-more-list summary { cursor: pointer; color: var(--ink-2); padding: 10px 0; }
+
+.rfilter { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px 6px; margin: 20px 0 16px; }
+.rfilter-group { display: grid; grid-template-columns: 3.2em minmax(0, 1fr); gap: 8px; align-items: start; margin: 0 0 8px; }
+.rfilter-label { font-size: 0.82rem; letter-spacing: 0.12em; color: var(--muted); line-height: 44px; }
+.rfilter-opts { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.chip-toggle { font: inherit; font-size: 0.9rem; cursor: pointer; padding: 4px 12px; }
+.chip-toggle[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.rfilter-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; margin: 0; }
+.rfilter-foot .status-msg { margin: 0; }
+.rfilter-foot .btn[hidden] { display: none; }
+.theme-toc { margin-bottom: 0; }
+.theme-sec h2 .theme-count { font-family: var(--sans); font-weight: 400; letter-spacing: 0; }
+
 /* 总览 */
 .grid-cards { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
 .mini-card { display: block; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; transition: border-color .12s; }
@@ -359,10 +421,19 @@ details.table-view summary { cursor: pointer; color: var(--ink-2); padding: 10px
   main { padding: 0; }
   .wrap { max-width: none; padding: 0; }
   .card, .type-card, .trait-list li, .verse { break-inside: avoid; box-shadow: none; }
+  /* 图表卡打印时会展开表格，整卡不可分页会在结果页第一页留下大片空白：允许在卡内分页，只保持图表本身完整 */
+  .chart-grid > .card { break-inside: auto; }
+  .chart-card .bars, .chart-card .legend, .data-table tr { break-inside: avoid; }
   blockquote.sutra { box-shadow: none; }
   h2, h3 { break-after: avoid; }
   a { color: inherit; text-decoration: none; }
   .tag { border: 1px solid currentColor; }
+  .tag-first { background: #fff; color: var(--accent); }
+  .book-card { box-shadow: none; }
+  .book-card.is-first { box-shadow: inset 3px 0 0 var(--accent); }
+  .book-card.is-target { outline: none; }
+  blockquote.sutra, .book-head, .book-meta { break-inside: avoid; }
+  .rfilter, .theme-toc { display: none !important; }
   details > summary { display: none !important; }
   .type-head { break-inside: avoid; break-after: avoid; }
   p, li, blockquote { orphans: 3; widows: 3; }
