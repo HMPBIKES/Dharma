@@ -1,0 +1,19 @@
+{
+  "name": "dharma-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "十九种人 · 网站内 AI 分析后端（Cloudflare Worker）",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "wrangler deploy --dry-run --outdir .wrangler/dry-run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.149.0"
+  }
+}

@@ -1,0 +1,27 @@
+# 十九种人 · AI 分析后端（Cloudflare Worker）配置
+# 说明见同目录 README.md。这里不放任何密钥：API 密钥用 `npx wrangler secret put ANTHROPIC_API_KEY` 单独存。
+
+name = "dharma-ai"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+# 允许调用本服务的网站来源，多个用英文逗号分开（只写协议+域名[+端口]，不带路径）。
+# 本地调试时可改成 "https://hmpbikes.github.io,http://localhost:8000"
+ALLOWED_ORIGINS = "https://hmpbikes.github.io"
+# 使用的模型 ID。想省钱可改为 "claude-sonnet-5-5" 或 "claude-haiku-5-5"
+MODEL = "claude-opus-5-5"
+# 服务器端拒答回退。账户暂不支持时（日志出现 bad_request status=400），把下一行开头的 "# " 删掉再部署。
+# FALLBACK = "off"
+
+# ---- 按 IP 限流（默认开启）：同一 IP 每 60 秒最多 5 次分析 ----
+# 只能防止同一个人连续狂点；换 IP 刷请求挡不住，所以 Anthropic 那边的花费上限一定要设。
+# namespace_id 是你自己定的一个整数（同一 Cloudflare 账户内不重复即可）。
+# 如果 `npx wrangler deploy` 因为下面这几行报错，在这 6 行每行开头加上 "# " 关掉限流再部署，其余功能不受影响。
+# 写法以 Cloudflare 官方文档（Workers → Runtime APIs → Rate Limiting）为准。
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1901"
+  [ratelimits.simple]
+  limit = 5
+  period = 60

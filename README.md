@@ -11,9 +11,11 @@ index.html            页面骨架（页眉、导航、页脚、内联 SVG 图�
 assets/style.css      样式（纸墨风格；颜色全部是 :root 上的 CSS 变量，含深色模式与打印样式）
 assets/app.js         单页应用：hash 路由、答题、结果页、图表、各内容页
 assets/scoring.js     计分模块（UMD：浏览器为 window.Scoring，node 下 module.exports）
+assets/config.js      站点配置（window.SITE_CONFIG）：目前只有 aiEndpoint，“网站内分析”的后端地址，默认留空
 data/*.js             由 tools/build-data.js 生成的数据文件（window.QUESTIONS 等），请勿手改
 content/*.json        题库与内容的源文件（JSON），修改内容请改这里
-tools/build-data.js   把 content/*.json 包装成 data/*.js，并做一致性检查
+tools/build-data.js   把 content/*.json 包装成 data/*.js，并做一致性检查；同时生成 worker/src/prompt.js
+worker/               “网站内分析”的后端（Cloudflare Worker），部署说明见 worker/README.md；不部署也不影响网站
 .nojekyll             告诉 GitHub Pages 不要用 Jekyll 处理
 ```
 
@@ -24,13 +26,31 @@ tools/build-data.js   把 content/*.json 包装成 data/*.js，并做一致性�
 | 地址 | 内容 |
 | --- | --- |
 | `#/` | 首页 |
-| `#/quiz` | 答题（一屏一题，可返回上一题，键盘 1–5 选择、← → 翻题） |
-| `#/result/<编码>` | 结果页（编码只含各项分数，不含逐题答案）；两型详解之后是“你的宜闻之法”，合并两型书单 |
+| `#/quiz` | 选择测评版本（简洁版 / 完整版，说明各自能得到什么）；有未完成的进度时提示继续。旧链接 `#/quiz` 也会到这里 |
+| `#/quiz/short` | 简洁版答题：`questions.json` 中 `versions.short.ids` 列出的“平时”题（约 30 题、10 分钟），不做压力对比 |
+| `#/quiz/full` | 完整版答题：全部 84 题（约 25 分钟），含“压力下的我” |
+| `#/result/<编码>` | 结果页（编码只含各项分数、测评版本与低可信标记，不含逐题答案和任何文字）；两型详解之后是“你的宜闻之法”（合并两型书单），再之后是“AI 深度分析（选用）” |
 | `#/types`、`#/type/<n>` | 十九种总览、单型详情（“法师开的药”之后为“法师宜说之法”：经中说法、宜怎样说、宜闻之法书卡、读经提醒） |
 | `#/practices`、`#/practice/<id>` | 修行法列表、修行法详情 |
 | `#/readings`、`#/readings/<书卡 id>` | 书单（法师宜说之法）：按七个主题列出全部书卡，可按三毒、口业、五德筛选（筛选条件存在 localStorage）；带 id 时直接定位并聚焦该书卡，已合并的旧 id 也能打开 |
 | `#/virtues`、`#/virtues/<id>` | 五德（`<id>` 为 `xin jin hui zhi yi`，直接定位到该德） |
 | `#/about` | 关于与免责声明 |
+
+### 答题与结果页的行为
+
+- **两版共用答案**：答案按题号保存在 localStorage（`shijiuzhong.quiz.v1`），简洁版做完后继续完整版，已答的题会保留，从第一道未答题接着做（结果页的“继续完成完整版”按钮）。
+- **任何一题都可以跳过**：likert 题五个按钮下有“跳过此题”；跳过、以及情境题选“以上都不像我”都不计分，也不计入该维度的换算上下限。
+- **情境题**（choice）：最后一项是“以上都不像我”（样式略淡）；选项下方的“写下我的真实反应”展开输入框（`open.prompt` / `open.placeholder`，800 字上限），选“以上都不像我”时自动展开。文字随输入保存（`shijiuzhong.texts.v1`，只在本机，不进分享链接）。情境题选中后不自动跳题，点“下一题”前进；likert 题仍是选中后自动前进。在输入框里打字时键盘快捷键不生效。
+- 文字里出现 `content/ai.json` 中 `crisis.keywords` 的字词时，题目下方温和地显示求助信息（988、1925、findahelpline.com、911），不阻止答题。
+- 最后一题之后是**小结**：已答、跳过几题，哪些维度答题较少；可“回去补答”或“查看结果”。结果页中答题较少的维度标“答题较少，仅供参考”；简洁版的结果标明“大致倾向”，不显示压力对比。
+
+### AI 深度分析（选用）
+
+结果页“AI 深度分析（选用）”一节，帮用户读一读自己在情境题下写的真实反应。文字说明都在 `content/ai.json`（生成 `data/ai.js`，`window.AI_CONTENT`），其中的拼文字、转义、危机字词检测等函数由 `tools/build-data.js` 同时写进 `data/ai.js` 与 `worker/src/prompt.js`，保证两边格式一致。
+
+- **复制给 AI**（不需要后端，现在就能用）：把分析说明、测评结果摘要（类型、分数、作答情况、答题较少的维度）和每道有作答或有文字的情境题（题干、所选项、用户原文）拼成一段文字，用户一键复制，粘贴到自己的 AI 助手里。复制失败时会展开并选中预览框，供手动复制。
+- **网站内分析**（默认关闭）：部署好 `worker/` 后，把 `assets/config.js` 里的 `aiEndpoint` 改成 Worker 网址加 `/analyze`（例如 `https://dharma-ai.你的名字.workers.dev/analyze`），推送后结果页才出现这个按钮。用户必须先勾选同意（`ai.consent`）才能点；请求超时 150 秒；返回的每个字段都先做 HTML 转义再显示，链接只指向本站已有的类型、修行法和书卡。API 密钥只存在 Worker 里，**不要写进 `config.js` 或任何仓库文件**。要关闭，把 `aiEndpoint` 改回 `''` 即可。
+- 用户写的文字只在本机；只有用户主动复制，或勾选同意后点“网站内分析”时，才会离开浏览器。分享链接里没有任何文字。分析结果注明“仅供自我观察，不是心理诊断”。
 
 ## 部署到 GitHub Pages
 
@@ -70,7 +90,9 @@ tools/build-data.js   把 content/*.json 包装成 data/*.js，并做一致性�
      - `section` / `context`：`normal`（平时的我）或 `stress`（压力大、被冒犯时的我）；
      - `format`：`likert`（五级“像不像我”）或 `choice`（情境选择）；
      - likert 题：`weights` 为各维度权重，`reverse: true` 表示反向计分；
-     - choice 题：`options` 为选项数组，每项的 `weights` 即选中后计入的分数，`{}` 表示中性选项；
+     - choice 题：`options` 为选项数组，每项的 `weights` 即选中后计入的分数，`{}` 表示中性选项；最后一项必须是 `{"text": "以上都不像我", "weights": {}, "none": true}`（选它不计分），其余计分选项 2–5 个；
+     - `open`（情境题）：`{prompt, placeholder}`，“写下我的真实反应”输入框的提示语与示例；
+     - 顶层 `versions`：`full` / `short` 的 `title`、`intro`、`est_minutes`（首页与 `#/quiz` 的版本说明），`short.ids` 为简洁版题号（只能用 `normal` 题，按完整版顺序，20–40 题，须覆盖全部 11 个维度且各有反向题，脚本会检查）；
      - 维度键名固定为 `h_tan h_chen h_chi`（三毒）、`m_rou m_cu m_chi`（口业）、`v_xin v_jin v_hui v_zhi v_yi`（五德）。
    - `types_1_7.json`、`types_8_13.json`、`types_14_19.json`：十九种的经文、白话、譬喻、优点提醒、体貌、果报、药方、推荐修行法与现代建议。`practices` 是推荐修行法 id 列表；其中经文没有直接给这一型开、由本站依经文通则搭配的，同时列入 `practices_derived`，页面上会标“推”。
    - `practices.json`、`virtues.json`、`about.json`：修行法、五德、关于页（`about.json` 的 `readings_sources` 是关于页“书单的来源与核对”一段，用换行分段）。
@@ -99,7 +121,7 @@ tools/build-data.js   把 content/*.json 包装成 data/*.js，并做一致性�
 var GAP = 12;    // 与三毒最高分相差不超过 GAP，视为“并列突出”
 var FLOOR = 45;  // 低于 FLOOR 的不算突出（若三项都低于门槛，取最高的一项）
 var LIKERT_MID = 3;
-var CODE_VERSION = '1';
+var CODE_VERSION = '2';  // v2 加入测评版本（简洁 / 完整）与低可信标记；仍能读取 v1 链接
 ```
 
 - 调大 `GAP`，两毒、三毒并具（第 4–7 种）会更常见；调小则单一类型（第 1–3 种）更常见。
@@ -119,4 +141,4 @@ Q.forEach(q=>a[q.id]=q.format==='choice'?0:4);console.log(S.score(a,Q));"
 
 ## 隐私
 
-答案只保存在访问者自己浏览器的 localStorage 中（所有读写都有容错，存储不可用时也能答题，只是刷新后不能续答）。网站没有服务器端程序，不收集任何数据。
+答案和用户在情境题下写的真实反应，只保存在访问者自己浏览器的 localStorage 中（所有读写都有容错，存储不可用时也能答题，只是刷新后不能续答）。网站本身没有服务器端程序，不收集任何数据；分享链接只含分数。只有站长开通了“网站内分析”、且用户勾选同意并点击后，才会把这次的文字和结果经 Worker 转发给 AI 服务商做一次分析，Worker 不保存这些内容。
